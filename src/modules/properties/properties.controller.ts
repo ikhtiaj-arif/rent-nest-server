@@ -42,7 +42,11 @@ const getPropertyCategories = catchAsync(
 
 const createProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await propertiesService.createProperty();
+    const userId = req?.user?.id!
+    const result = await propertiesService.createProperty(
+      req.body,
+      userId,
+    );
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
