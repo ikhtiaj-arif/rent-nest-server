@@ -1,1 +1,86 @@
-// Properties Controller placeholder
+import { NextFunction, Request, Response } from "express";
+import httpStatus from "http-status";
+import { catchAsync } from "src/utils/catchAsync";
+import { sendResponse } from "src/utils/sendResponse";
+import { propertiesService } from "./properties.service";
+
+const getAllProperties = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.getAllProperties();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All properties retrieved successfully",
+      data: result,
+    });
+  },
+);
+
+const getPropertyById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.getPropertyById();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property retrieved successfully",
+      data: result,
+    });
+  },
+);
+
+const getPropertyCategories = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.getPropertyCategories();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property categories retrieved successfully",
+      data: result,
+    });
+  },
+);
+
+const createProperty = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.createProperty();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Property listing created successfully",
+      data: result,
+    });
+  },
+);
+
+const updateProperty = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.updateProperty();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property listing updated successfully",
+      data: result,
+    });
+  },
+);
+
+const deleteProperty = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.deleteProperty();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property listing removed successfully",
+      data: result,
+    });
+  },
+);
+
+export const propertiesController = {
+  getAllProperties,
+  getPropertyById,
+  getPropertyCategories,
+  createProperty,
+  updateProperty,
+  deleteProperty,
+};
