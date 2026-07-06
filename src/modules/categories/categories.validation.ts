@@ -1,0 +1,1 @@
+// Categories Validation schema placeholder

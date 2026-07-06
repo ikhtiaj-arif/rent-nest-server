@@ -1,0 +1,1 @@
+// Properties Validation schema placeholder

@@ -1,0 +1,1 @@
+// Rentals Validation schema placeholder

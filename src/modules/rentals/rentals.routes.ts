@@ -1,0 +1,1 @@
+// Rentals Routes placeholder
