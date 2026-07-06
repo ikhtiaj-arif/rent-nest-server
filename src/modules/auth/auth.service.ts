@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
+import { SignOptions } from "jsonwebtoken";
 import config from "src/config";
 import { prisma } from "src/lib/prisma";
-import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
 import { jwtUtils } from "src/utils/jwt";
-import { SignOptions } from "jsonwebtoken";
+import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
 
 // Auth Service placeholder
 const registerDB = async (payload: IRegisterUserPayload) => {
@@ -53,7 +53,6 @@ const loginUser = async (payload: ILoginUser) => {
     },
   });
 
-  console.log(user);
   const isPasswordMatched = await bcrypt.compare(password, user.password);
 
   if (!isPasswordMatched) {
@@ -69,26 +68,34 @@ const loginUser = async (payload: ILoginUser) => {
     phone: user.phone,
   };
 
-    const accessToken = jwtUtils.createToken(
-      jwtPayload,
-      config.jwt_access_secret,
-      {
-        expiresIn: config.jwt_access_expires_in,
-      } as SignOptions,
-    );
+  const accessToken = jwtUtils.createToken(
+    jwtPayload,
+    config.jwt_access_secret,
+    {
+      expiresIn: config.jwt_access_expires_in,
+    } as SignOptions,
+  );
 
-    const refreshToken = jwtUtils.createToken(
-      jwtPayload,
-      config.jwt_refresh_secret,
-      {
-        expiresIn: config.jwt_refresh_expires_in,
-      } as SignOptions,
-    );
+  const refreshToken = jwtUtils.createToken(
+    jwtPayload,
+    config.jwt_refresh_secret,
+    {
+      expiresIn: config.jwt_refresh_expires_in,
+    } as SignOptions,
+  );
 
-    return { accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };
-const getUserProfile = async () => {
-  return "User profile retrieved successfully";
+const getUserProfile = async (userId: string) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+    omit: {
+      password: true,
+    },
+  });
+  return user;
 };
 
 export const authService = {

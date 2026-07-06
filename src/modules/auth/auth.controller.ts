@@ -7,7 +7,7 @@ import httpStatus from "http-status";
 // Auth Controller placeholder
 const register = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const payload = req.body
+    const payload = req.body;
     const result = await authService.registerDB(payload);
     sendResponse(res, {
       success: true,
@@ -45,7 +45,6 @@ const login = catchAsync(
       message: "User logged in successfully",
       data: { accessToken, refreshToken },
     });
-  
   },
 );
 // const refreshToken = catchAsync(
@@ -54,12 +53,13 @@ const login = catchAsync(
 
 const getUserProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await authService.getUserProfile();
+    const { id } = req.user!;
+    const profile = await authService.getUserProfile(id);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
       message: "User profile retrieved successfully",
-      data: result,
+      data: { profile },
     });
   },
 );

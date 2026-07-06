@@ -1,8 +1,8 @@
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
-
+import cookieParser from "cookie-parser";
 import config from "./config";
-import { errorHandler } from "./middleware/errorHandler";
+import { globalErrorHandler } from "./middleware/errorHandler";
 import { notFound } from "./middleware/notFound";
 import { authRoutes } from "./modules/auth/auth.routes";
 import { categoryRoutes } from "./modules/categories/categories.service";
@@ -31,6 +31,7 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Root Route
 app.get("/", (_req: Request, res: Response) => {
@@ -53,6 +54,6 @@ app.use("/api/reviews", reviewRoutes);
 app.use(notFound);
 
 // Global Error Handler
-app.use(errorHandler);
+app.use(globalErrorHandler);
 
 export default app;
