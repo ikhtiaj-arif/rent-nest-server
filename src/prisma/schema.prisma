@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  TENANT
+  LANDLORD
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+}
+
+enum RentalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password       String
+  role           Role
+  status         UserStatus      @default(ACTIVE)
+  phone          String?
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+  properties     Property[]
+  rentalRequests RentalRequest[]
+  reviews        Review[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  properties  Property[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Property {
+  id             String          @id @default(uuid())
+  landlordId     String          @map("landlord_id")
+  landlord       User            @relation(fields: [landlordId], references: [id], onDelete: Restrict)
+  categoryId     String          @map("category_id")
+  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title          String
+  description    String?
+  address        String?
+  city           String
+  price          Int
+  bedrooms       Int?
+  bathrooms      Int?
+  amenities      String[]        @default([])
+  isAvailable    Boolean         @default(true) @map("is_available")
+  images         String[]        @default([])
+  rentalRequests RentalRequest[]
+  reviews        Review[]
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@index([city])
+  @@index([price])
+  @@index([categoryId])
+  @@map("properties")
+}
+
+model RentalRequest {
+  id          String       @id @default(uuid())
+  tenantId    String       @map("tenant_id")
+  tenant      User         @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  propertyId  String       @map("property_id")
+  property    Property     @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+  status      RentalStatus @default(PENDING)
+  moveInDate  DateTime     @map("move_in_date")
+  message     String?
+  payments    Payment[]
+  reviews     Review[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("rental_requests")
+}
+
+model Payment {
+  id              String          @id @default(uuid())
+  rentalRequestId String          @map("rental_request_id")
+  rentalRequest   RentalRequest   @relation(fields: [rentalRequestId], references: [id], onDelete: Restrict)
+  amount          Int
+  provider        PaymentProvider
+  status          PaymentStatus   @default(PENDING)
+  transactionId   String?         @unique @map("transaction_id")
+  paidAt          DateTime?       @map("paid_at")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  @@map("payments")
+}
+
+model Review {
+  id              String        @id @default(uuid())
+  tenantId        String        @map("tenant_id")
+  tenant          User          @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  propertyId      String        @map("property_id")
+  property        Property      @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+  rentalRequestId String        @map("rental_request_id")
+  rentalRequest   RentalRequest @relation(fields: [rentalRequestId], references: [id], onDelete: Restrict)
+  rating          Int
+  comment         String
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  @@unique([tenantId, propertyId, rentalRequestId])
+  @@map("reviews")
+}

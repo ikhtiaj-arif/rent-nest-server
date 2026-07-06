@@ -1,11 +1,23 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction, Application } from "express";
 import cors from "cors";
 
 import { errorHandler } from "./middleware/errorHandler";
 import { notFound } from "./middleware/notFound";
+import config from "./config";
 
+const app: Application = express();
 
-const app = express();
+app.use((req, res, next) => {
+  console.log(req.method, req.originalUrl);
+  next();
+});
+
+app.use(
+  cors({
+    origin: config.app_url,
+    credentials: true,
+  }),
+);
 
 // Global Middlewares
 

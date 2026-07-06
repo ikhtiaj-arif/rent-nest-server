@@ -51,6 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Category: 'Category',
+  Property: 'Property',
+  RentalRequest: 'RentalRequest',
+  Review: 'Review',
   User: 'User'
 } as const
 
@@ -70,6 +74,59 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const PropertyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  city: 'city',
+  price: 'price',
+  isAvailable: 'isAvailable',
+  landlordId: 'landlordId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
+
+
+export const RentalRequestScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  moveInDate: 'moveInDate',
+  tenantId: 'tenantId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RentalRequestScalarFieldEnum = (typeof RentalRequestScalarFieldEnum)[keyof typeof RentalRequestScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  tenantId: 'tenantId',
+  propertyId: 'propertyId',
+  rentalRequestId: 'rentalRequestId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -77,6 +134,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   status: 'status',
+  phone: 'phone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -98,4 +156,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
