@@ -1,9 +1,12 @@
 import { RentalStatus } from "generated/prisma/enums";
 import { RentalRequestWhereInput } from "generated/prisma/models";
 import { prisma } from "src/lib/prisma";
-import { ICreateRentalPayload, IRentalQuery } from "./rental.interface";
-
-
+import {
+  ICreateRentalPayload,
+  ILandlordRentalQuery,
+  IRentalQuery,
+  IUserRentalQuery,
+} from "./rental.interface";
 
 const createRentals = async (
   payload: ICreateRentalPayload,
@@ -48,16 +51,23 @@ const createRentals = async (
 };
 const getRentalsOnPropertyForLandlord = async (
   landlordId: string,
-  status?: RentalStatus,
+  query: ILandlordRentalQuery,
 ) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy || "createdAt";
+  const sortOrder = query.sortOrder || "desc";
+
   const whereCondition: RentalRequestWhereInput = {
     property: {
       landlordId,
     },
   };
 
-  if (status) {
-    const normalizedStatus = status.toUpperCase() as RentalStatus;
+  if (query.status) {
+    const normalizedStatus = query.status.toUpperCase() as RentalStatus;
 
     if (!Object.values(RentalStatus).includes(normalizedStatus)) {
       throw new Error("Invalid rental status");
@@ -66,29 +76,45 @@ const getRentalsOnPropertyForLandlord = async (
     whereCondition.status = normalizedStatus;
   }
 
-  const result = await prisma.rentalRequest.findMany({
-    where: whereCondition,
-    include: {
-      tenant: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          phone: true,
+  const [rentals, total] = await prisma.$transaction([
+    prisma.rentalRequest.findMany({
+      where: whereCondition,
+      skip,
+      take: limit,
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      include: {
+        tenant: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        property: {
+          include: {
+            category: true,
+          },
         },
       },
-      property: {
-        include: {
-          category: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    }),
 
-  return result;
+    prisma.rentalRequest.count({
+      where: whereCondition,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+    data: rentals,
+  };
 };
 
 const getRentalsById = async (rentalId: string) => {
@@ -120,32 +146,70 @@ const getRentalsById = async (rentalId: string) => {
   return rental;
 };
 
-const getUserRentalRequestsDB = async (tenantId: string) => {
-  const result = await prisma.rentalRequest.findMany({
-    where: {
-      tenantId,
-    },
-    include: {
-      property: {
-        include: {
-          category: true,
-          landlord: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              phone: true,
+const getUserRentalRequestsDB = async (
+  tenantId: string,
+  query: IUserRentalQuery,
+) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy || "createdAt";
+  const sortOrder = query.sortOrder || "desc";
+
+  const whereCondition: RentalRequestWhereInput = {
+    tenantId,
+  };
+
+  if (query.status) {
+    const normalizedStatus = query.status.toUpperCase() as RentalStatus;
+
+    if (!Object.values(RentalStatus).includes(normalizedStatus)) {
+      throw new Error("Invalid rental status");
+    }
+
+    whereCondition.status = normalizedStatus;
+  }
+
+  const [rentals, total] = await prisma.$transaction([
+    prisma.rentalRequest.findMany({
+      where: whereCondition,
+      skip,
+      take: limit,
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      include: {
+        property: {
+          include: {
+            category: true,
+            landlord: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                phone: true,
+              },
             },
           },
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    }),
 
-  return result;
+    prisma.rentalRequest.count({
+      where: whereCondition,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+    data: rentals,
+  };
 };
 
 const approveRentalRequest = async (
@@ -184,7 +248,6 @@ const approveRentalRequest = async (
 
   return result;
 };
-
 
 const getAllRentals = async (query: IRentalQuery) => {
   const limit = query.limit ? Number(query.limit) : 10;
@@ -236,7 +299,7 @@ const getAllRentals = async (query: IRentalQuery) => {
     });
   }
 
-  // Status 
+  // Status
   if (query.status) {
     const status = query.status.toUpperCase() as RentalStatus;
 
@@ -342,5 +405,5 @@ export const rentalService = {
   getRentalsById,
   getUserRentalRequestsDB,
   approveRentalRequest,
-  getAllRentals
+  getAllRentals,
 };

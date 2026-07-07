@@ -1,6 +1,5 @@
 // Rentals Controller placeholder
 import { NextFunction, Request, Response } from "express";
-import { RentalStatus } from "generated/prisma/enums";
 import httpStatus from "http-status";
 import { catchAsync } from "src/utils/catchAsync";
 import { sendResponse } from "src/utils/sendResponse";
@@ -58,7 +57,10 @@ const getRentalById = catchAsync(
 const getUserRentalRequests = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id!;
-    const result = await rentalService.getUserRentalRequestsDB(userId);
+    const result = await rentalService.getUserRentalRequestsDB(
+      userId,
+      req.query,
+    );
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -92,7 +94,7 @@ const getRentalsOnPropertyForLandlord = catchAsync(async (req, res) => {
 
   const result = await rentalService.getRentalsOnPropertyForLandlord(
     landlordId!,
-    status as RentalStatus | undefined,
+    req.query,
   );
 
   sendResponse(res, {

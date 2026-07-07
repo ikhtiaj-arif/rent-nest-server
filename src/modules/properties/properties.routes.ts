@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { propertiesController } from "./properties.controller";
 import { rentalController } from "../rentals/rentals.controller";
+import { propertiesController } from "./properties.controller";
 
 // Properties Routes placeholder
 const router = Router();
@@ -11,5 +11,4 @@ router.get("/rentals", rentalController.getAllRentals);
 router.get("/:id", propertiesController.getPropertyById);
 // router.patch("/:id", propertiesController.getPropertyById);
 
-
-export const propertyRoutes = router
+export const propertyRoutes = router;

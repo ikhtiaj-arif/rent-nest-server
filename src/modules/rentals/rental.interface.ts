@@ -21,3 +21,18 @@ export interface ICreateRentalPayload {
   propertyId: string;
   moveInDate: Date;
 }
+export interface ILandlordRentalQuery {
+  page?: string;
+  limit?: string;
+  status?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
+
+export interface IUserRentalQuery {
+  page?: string;
+  limit?: string;
+  status?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
