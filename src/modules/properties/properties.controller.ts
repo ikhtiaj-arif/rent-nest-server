@@ -6,7 +6,7 @@ import { propertiesService } from "./properties.service";
 
 const getAllProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const query = req.query
+    const query = req.query;
     const result = await propertiesService.getAllProperties(query);
     sendResponse(res, {
       success: true,
@@ -19,7 +19,7 @@ const getAllProperties = catchAsync(
 
 const getPropertyById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const {id} = req.params
+    const { id } = req.params;
     const result = await propertiesService.getPropertyById(id!);
     sendResponse(res, {
       success: true,
@@ -44,11 +44,8 @@ const getPropertyCategories = catchAsync(
 
 const createProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req?.user?.id!
-    const result = await propertiesService.createProperty(
-      req.body,
-      userId,
-    );
+    const userId = req?.user?.id!;
+    const result = await propertiesService.createProperty(req.body, userId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
@@ -60,7 +57,9 @@ const createProperty = catchAsync(
 
 const updateProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await propertiesService.updateProperty();
+    const payload = req.body;
+    const propertyId = req.params.id!;
+    const result = await propertiesService.updateProperty(propertyId, payload);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -72,7 +71,7 @@ const updateProperty = catchAsync(
 
 const deleteProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await propertiesService.deleteProperty();
+    const result = await propertiesService.deleteProperty(req.params.id!);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,

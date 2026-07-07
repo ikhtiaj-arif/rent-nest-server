@@ -152,11 +152,100 @@ const getPropertyCategories = async () => {
   return result;
 };
 
-const updateProperty = async () => {
-  return "Property updated successfully";
+const updateProperty = async (
+  propertyId: string,
+  payload: Partial<IPropertyPayload>,
+) => {
+  const property = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!property) {
+    throw new Error("Property not found");
+  }
+  const result = await prisma.$transaction(async (tx) => {
+    let categoryId = property.categoryId;
+
+    // Update category if categoryName is provided
+    if (payload.categoryName || payload.categoryDescription) {
+      // Get the property's current category
+      const currentCategory = await tx.category.findUnique({
+        where: {
+          id: property.categoryId,
+        },
+      });
+
+      if (!currentCategory) {
+        throw new Error("Category not found");
+      }
+
+      const category = await tx.category.upsert({
+        where: {
+          name: payload.categoryName ?? currentCategory.name,
+        },
+        update: {
+          description:
+            payload.categoryDescription ?? currentCategory.description,
+        },
+        create: {
+          name: payload.categoryName ?? currentCategory.name,
+          description:
+            payload.categoryDescription ?? currentCategory.description,
+        },
+      });
+
+      categoryId = category.id;
+    }
+
+    const updatedProperty = await tx.property.update({
+      where: {
+        id: propertyId,
+      },
+      data: {
+        title: payload.title,
+        city: payload.city,
+        price: payload.price,
+        categoryId,
+      },
+      include: {
+        category: true,
+        landlord: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+            role: true,
+          },
+        },
+      },
+    });
+
+    return updatedProperty;
+  });
+
+  return result;
 };
-const deleteProperty = async () => {
-  return "Property updated successfully";
+const deleteProperty = async (propertyId: string) => {
+  const property = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!property) {
+    throw new Error("Property not found");
+  }
+
+  await prisma.property.delete({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  return null;
 };
 
 export const propertiesService = {
