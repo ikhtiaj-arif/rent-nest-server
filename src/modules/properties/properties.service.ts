@@ -1,7 +1,8 @@
 // Properties Service placeholder
 
+import { PropertyWhereInput } from "generated/prisma/models";
 import { prisma } from "src/lib/prisma";
-import { IPropertyPayload } from "./properties.interface";
+import { IPropertyPayload, IPropertyQuery } from "./properties.interface";
 
 const createProperty = async (payload: IPropertyPayload, userId: string) => {
   const { title, city, price, categoryName, categoryDescription } = payload;
@@ -29,13 +30,81 @@ const createProperty = async (payload: IPropertyPayload, userId: string) => {
       },
       include: { category: true },
     });
-    return property
+    return property;
   });
-  return result
+  return result;
 };
 
-const getAllProperties = async () => {
-  return "All properties retrieved successfully";
+const getAllProperties = async (query: IPropertyQuery) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy ? query.sortBy : "createdAt";
+  const sortOrder = query.sortOrder ? query.sortOrder : "desc";
+
+  const andConditions: PropertyWhereInput[] = [];
+
+  if (query.searchTerm) {
+    andConditions.push({
+      OR: [
+        {
+          title: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
+        {
+          city: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
+      ],
+    });
+  }
+  if (query.title) {
+    andConditions.push({ title: query.title });
+  }
+  if (query.city) {
+    andConditions.push({ city: query.city });
+  }
+  if (query.minPrice || query.maxPrice) {
+    andConditions.push({
+      price: {
+        gte: query.minPrice ? Number(query.minPrice) : undefined,
+        lte: query.maxPrice ? Number(query.maxPrice) : undefined,
+      },
+    });
+  }
+
+  // Category (Type)
+  if (query.type) {
+    andConditions.push({
+      category: {
+        name: {
+          equals: query.type,
+          mode: "insensitive",
+        },
+      },
+    });
+  }
+
+  const result = await prisma.property.findMany({
+    where: {
+      AND: andConditions,
+    },
+    take: limit,
+    skip: skip,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: {
+      category: true,
+    },
+  });
+
+  return result;
 };
 const getPropertyById = async () => {
   return "Property retrieved successfully";
