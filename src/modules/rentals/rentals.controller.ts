@@ -1,10 +1,10 @@
 // Rentals Controller placeholder
 import { NextFunction, Request, Response } from "express";
+import { RentalStatus } from "generated/prisma/enums";
 import httpStatus from "http-status";
 import { catchAsync } from "src/utils/catchAsync";
 import { sendResponse } from "src/utils/sendResponse";
 import { rentalService } from "./rentals.service";
-import { RentalStatus } from "generated/prisma/enums";
 
 const createRental = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -20,14 +20,14 @@ const createRental = catchAsync(
 );
 const getAllRentals = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // const userId = req.user?.id!;
-    // const result = await rentalService.getRentals(userId);
-    // sendResponse(res, {
-    //   success: true,
-    //   statusCode: httpStatus.OK,
-    //   message: "All rentals retrieved successfully",
-    //   data: result,
-    // });
+    const query = req.query;
+    const result = await rentalService.getAllRentals(query);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All rentals retrieved successfully",
+      data: result,
+    });
   },
 );
 const getAllRentalRequests = catchAsync(
@@ -57,7 +57,7 @@ const getRentalById = catchAsync(
 
 const getUserRentalRequests = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.user?.id!;
+    const userId = req.user?.id!;
     const result = await rentalService.getUserRentalRequestsDB(userId);
     sendResponse(res, {
       success: true,
@@ -69,7 +69,14 @@ const getUserRentalRequests = catchAsync(
 );
 const approveRentalRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.approveRentalRequest();
+    const rentalRequestId = req.params.id;
+    const landlordId = req.user?.id;
+    const status = req.body.status;
+    const result = await rentalService.approveRentalRequest(
+      rentalRequestId!,
+      landlordId!,
+      status,
+    );
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -103,5 +110,5 @@ export const rentalController = {
   getUserRentalRequests,
   approveRentalRequest,
   getAllRentalRequests,
-  getRentalsOnPropertyForLandlord
+  getRentalsOnPropertyForLandlord,
 };

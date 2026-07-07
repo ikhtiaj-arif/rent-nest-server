@@ -13,7 +13,7 @@ router.post(
 );
 router.put("/properties/:id", propertiesController.updateProperty);
 router.delete("/properties/:id", propertiesController.deleteProperty);
-router.get("/requests", rentalController.getPendingRentals);
-router.patch("/requests/:id", rentalController.approveRentalRequest);
+router.get("/requests", rentalController.getRentalsOnPropertyForLandlord);
+router.patch("/requests/:id",auth(Role.LANDLORD), rentalController.approveRentalRequest);
 
 export const landlordRoutes = router;

@@ -23,6 +23,19 @@ export interface IUser {
   reviews?: any[]; // Replace 'any' with your IReview interface
 }
 export interface ILoginUser {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserQuery {
+  page?: string;
+  limit?: string;
+
+  searchTerm?: string;
+
+  role?: string;
+  status?: string;
+
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
 }

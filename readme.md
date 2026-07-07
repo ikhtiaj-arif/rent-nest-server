@@ -72,6 +72,37 @@ PENDING → APPROVED → PAYMENT → ACTIVE → COMPLETED
 
 ---
 
+## 📦 Business logic
+Property Listed
+        │
+        ▼
+Tenant submits rental request
+        │
+        ▼
+Status = PENDING
+        │
+        ▼
+Landlord reviews request
+        │
+ ┌──────┴─────────┐
+ │                │
+Reject         Approve
+ │                │
+ ▼                ▼
+REJECTED      APPROVED
+                    │
+          Tenant makes payment
+                    │
+      ┌─────────────┴──────────────┐
+      │                            │
+Payment Failed              Payment Successful
+      │                            │
+      ▼                            ▼
+Still APPROVED             ACTIVE RENTAL
+                             Property unavailable
+
+
+
 ## 📦 Project Structure
 
 ```

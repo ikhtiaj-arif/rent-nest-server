@@ -1,5 +1,3 @@
-import { PropertyWhereInput } from "generated/prisma/models";
-
 export interface IPropertyPayload {
   title: string;
   city: string;
@@ -8,7 +6,10 @@ export interface IPropertyPayload {
   categoryDescription: string;
 }
 
-export interface IPropertyQuery extends PropertyWhereInput {
+export interface IPropertyQuery {
+  page?: string;
+  limit?: string;
+
   searchTerm?: string;
 
   title?: string;
@@ -18,8 +19,11 @@ export interface IPropertyQuery extends PropertyWhereInput {
   maxPrice?: string;
 
   type?: string;
-  page?: string;
-  limit?: string;
-  sortOrder?: string;
+
+  landlordId?: string;
+
+  isAvailable?: string;
+
   sortBy?: string;
+  sortOrder?: "asc" | "desc";
 }
