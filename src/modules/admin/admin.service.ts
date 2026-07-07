@@ -114,13 +114,13 @@ const updateUserById = async (
   });
 
   if (!user) {
-    throw new Error( "User not found");
+    throw new Error("User not found");
   }
 
   const status = payload.status.toUpperCase() as UserStatus;
 
   if (!Object.values(UserStatus).includes(status)) {
-    throw new Error( "Invalid user status");
+    throw new Error("Invalid user status");
   }
 
   const result = await prisma.user.update({
@@ -146,6 +146,6 @@ const updateUserById = async (
 };
 
 export const adminService = {
-    getAllUsers,
-    updateUserById
-}
+  getAllUsers,
+  updateUserById,
+};

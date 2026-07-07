@@ -7,7 +7,7 @@ import { adminService } from "./admin.service";
 
 const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await adminService.getAllUsers();
+    const result = await adminService.getAllUsers(req.query);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -18,7 +18,9 @@ const getAllUsers = catchAsync(
 );
 const updateUserById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await adminService.updateUserById();
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await adminService.updateUserById(id!, payload);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
