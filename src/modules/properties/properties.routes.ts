@@ -6,9 +6,10 @@ import { rentalController } from "../rentals/rentals.controller";
 const router = Router();
 
 router.get("/", propertiesController.getAllProperties);
-router.patch("/:id", propertiesController.getPropertyById);
 router.get("/properties", propertiesController.getAllProperties);
 router.get("/rentals", rentalController.getAllRentals);
+router.get("/:id", propertiesController.getPropertyById);
+// router.patch("/:id", propertiesController.getPropertyById);
 
 
 export const propertyRoutes = router

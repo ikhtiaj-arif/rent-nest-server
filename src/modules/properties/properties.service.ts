@@ -101,16 +101,55 @@ const getAllProperties = async (query: IPropertyQuery) => {
     },
     include: {
       category: true,
+      landlord: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          // role: true,
+        },
+      },
     },
   });
 
   return result;
 };
-const getPropertyById = async () => {
-  return "Property retrieved successfully";
+const getPropertyById = async (propertyId: string) => {
+  const result = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+    include: {
+      category: true,
+      landlord: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          // role: true,
+        },
+      },
+      reviews: true,
+      rentalRequests: true,
+    },
+  });
+
+  if (!result) {
+    throw new Error("Property not found");
+  }
+
+  return result;
 };
 const getPropertyCategories = async () => {
-  return "Property categories retrieved successfully";
+  const result = await prisma.category.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return result;
 };
 
 const updateProperty = async () => {
