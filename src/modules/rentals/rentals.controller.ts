@@ -4,32 +4,36 @@ import httpStatus from "http-status";
 import { catchAsync } from "src/utils/catchAsync";
 import { sendResponse } from "src/utils/sendResponse";
 import { rentalService } from "./rentals.service";
+import { RentalStatus } from "generated/prisma/enums";
 
 const createRental = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.createRentals();
+    const userId = req?.user?.id!;
+    const result = await rentalService.createRentals(req.body, userId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Rental Created successfully",
+      message: "Rental requested successfully",
       data: result,
     });
   },
 );
 const getAllRentals = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.getRentals();
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "All rentals retrieved successfully",
-      data: result,
-    });
+    // const userId = req.user?.id!;
+    // const result = await rentalService.getRentals(userId);
+    // sendResponse(res, {
+    //   success: true,
+    //   statusCode: httpStatus.OK,
+    //   message: "All rentals retrieved successfully",
+    //   data: result,
+    // });
   },
 );
 const getAllRentalRequests = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.getRentals();
+    const userId = req.user?.id!;
+    const result = "await rentalService.getPendingRentals(userId)";
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -40,7 +44,8 @@ const getAllRentalRequests = catchAsync(
 );
 const getRentalById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.getRentalsById();
+    const { id } = req.params!;
+    const result = await rentalService.getRentalsById(id!);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -50,9 +55,10 @@ const getRentalById = catchAsync(
   },
 );
 
-const getPendingRentals = catchAsync(
+const getUserRentalRequests = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await rentalService.getPendingRentals();
+  const userId = req.user?.id!;
+    const result = await rentalService.getUserRentalRequestsDB(userId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -73,11 +79,29 @@ const approveRentalRequest = catchAsync(
   },
 );
 
+const getRentalsOnPropertyForLandlord = catchAsync(async (req, res) => {
+  const landlordId = req.user?.id;
+  const { status } = req.query;
+
+  const result = await rentalService.getRentalsOnPropertyForLandlord(
+    landlordId!,
+    status as RentalStatus | undefined,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Rental requests retrieved successfully",
+    data: result,
+  });
+});
+
 export const rentalController = {
   createRental,
   getAllRentals,
   getRentalById,
-  getPendingRentals,
+  getUserRentalRequests,
   approveRentalRequest,
   getAllRentalRequests,
+  getRentalsOnPropertyForLandlord
 };
