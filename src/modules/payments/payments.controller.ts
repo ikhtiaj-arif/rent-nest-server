@@ -21,9 +21,36 @@ const createPayment = catchAsync(
   },
 );
 
+const confirmPayment = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // Stripe sends the signature in this header used to verify authenticity
+    const event = req.body as Buffer;
+    const signature = req.headers["stripe-signature"] as string;
+
+    if (!signature) {
+      throw new Error("Missing Stripe signature header");
+    }
+
+    //! req.body here is a raw Buffer (because of express.raw() in app.ts)
+    const result = await paymentService.handleStripeWebhook(
+      event,
+      signature,
+      config.stripe_webhook_secret,
+    );
+
+    //! Always respond 200 to Stripe — non-2xx causes Stripe to retry the webhook
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Webhook received",
+      data: result,
+    });
+  },
+);
 
 
 export const paymentController = {
   createPayment,
+  confirmPayment
  
 };

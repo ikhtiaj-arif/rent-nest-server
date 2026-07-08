@@ -108,7 +108,116 @@ const createPayment = async (
 };
 
 
+const handleStripeWebhook = async (
+  rawBody: Buffer,
+  signature: string,
+  webhookSecret: string,
+) => {
+  let event: import("stripe").Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+  } catch (err: any) {
+    throw new Error(`Webhook signature verification failed: ${err.message}`);
+  }
+
+  switch (event.type) {
+    //  event for Checkout Session (was payment_intent.succeeded)
+    case "checkout.session.completed": {
+      const session = event.data
+        .object as import("stripe").Stripe.Checkout.Session;
+      await handlePaymentSuccess(session.id, session.metadata);
+      break;
+    }
+
+    // failure event for Checkout Session
+    case "checkout.session.expired": {
+      const session = event.data
+        .object as import("stripe").Stripe.Checkout.Session;
+      await handlePaymentFailure(session.id);
+      break;
+    }
+
+    default:
+      break;
+  }
+
+  return { received: true };
+};
+
+const handlePaymentSuccess = async (
+  sessionId: string,
+  metadata: import("stripe").Stripe.Metadata | null,
+) => {
+  // look up by session.id (stored in stripePaymentIntentId field)
+  const payment = await prisma.payment.findUnique({
+    where: { stripePaymentIntentId: sessionId },
+  });
+
+  if (!payment) {
+    // Stripe may fire before our DB write in rare race conditions — safe to return
+    // Stripe will retry delivery automatically
+    console.warn(`Webhook received for unknown session: ${sessionId}`);
+    return;
+  }
+
+  // Idempotency guard — Stripe retries webhooks, don't process twice
+  if (payment.status === PaymentStatus.COMPLETED) {
+    return;
+  }
+
+  // get propertyId from metadata (passed when creating session)
+  const propertyId = metadata?.propertyId;
+
+  // Atomic transaction — all three updates succeed or all fail together
+  await prisma.$transaction([
+    // 1. Mark payment as completed
+    prisma.payment.update({
+      where: { stripePaymentIntentId: sessionId },
+      data: { status: PaymentStatus.COMPLETED },
+    }),
+
+    // 2. Move rental APPROVED → ACTIVE
+    prisma.rentalRequest.update({
+      where: { id: payment.rentalRequestId },
+      data: { status: RentalStatus.ACTIVE },
+    }),
+
+    // 3. Mark property as unavailable — it's now rented
+    // Only runs if propertyId exists in metadata
+    ...(propertyId
+      ? [
+          prisma.property.update({
+            where: { id: propertyId },
+            data: { isAvailable: false },
+          }),
+        ]
+      : []),
+  ]);
+};
+const handlePaymentFailure = async (sessionId: string) => {
+  const payment = await prisma.payment.findUnique({
+    where: { stripePaymentIntentId: sessionId },
+  });
+
+  if (!payment) {
+    return;
+  }
+
+  // Don't overwrite a COMPLETED payment
+  if (payment.status === PaymentStatus.PENDING) {
+    await prisma.payment.update({
+      where: { stripePaymentIntentId: sessionId },
+      data: { status: PaymentStatus.FAILED },
+    });
+    // Rental stays APPROVED — tenant can create a new payment and retry
+  }
+};
+
+
+
 export const paymentService = {
   createPayment,
+  handleStripeWebhook
 
 };

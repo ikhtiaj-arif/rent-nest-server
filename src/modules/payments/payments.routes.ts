@@ -9,5 +9,5 @@ const router = Router();
 //  only Authenticated tenant creates a PaymentIntent for their approved rental
 router.post("/create", auth(Role.TENANT), paymentController.createPayment);
 
-
+router.post("/confirm", paymentController.confirmPayment);
 export const paymentRoutes = router;
