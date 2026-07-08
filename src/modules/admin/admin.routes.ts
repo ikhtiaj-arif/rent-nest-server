@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/users", auth("ADMIN"), adminController.getAllUsers);
 router.patch("/users/:id", auth("ADMIN"), adminController.updateUserById);
-router.get("/properties", auth("ADMIN"), propertiesController.getAllProperties);
+router.get("/properties", propertiesController.getAllProperties);
 router.get("/rentals", auth("ADMIN"), rentalController.getAllRentals);
 
 export const adminRoutes = router;

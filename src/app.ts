@@ -12,6 +12,7 @@ import { landlordRoutes } from "./modules/landLord/landlord.routes";
 import { propertyRoutes } from "./modules/properties/properties.routes";
 import { reviewRoutes } from "./modules/reviews/reviews.routes";
 import { rentalRoutes } from "./modules/rentals/rentals.routes";
+import { paymentRoutes } from "./modules/payments/payments.routes";
 
 const app: Application = express();
 
@@ -27,9 +28,16 @@ app.use(
   }),
 );
 
-// Global Middlewares
 
-app.use(cors());
+//  WEBHOOK ROUTE — must come BEFORE express.json()
+app.use(
+  "/api/payments/confirm",
+  express.raw({ type: "application/json" }),
+);
+
+
+
+// Global Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -51,6 +59,7 @@ app.use("/api/landlord", landlordRoutes);
 app.use("/api/rentals", rentalRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Handle 404 (Route not found)
 app.use(notFound);
