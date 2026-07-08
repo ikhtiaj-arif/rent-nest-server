@@ -1,0 +1,23 @@
+model Payment {
+  id       String        @id @default(uuid())
+  amount   Float
+  currency String        @default("usd")
+  status   PaymentStatus @default(PENDING)
+  provider PaymentProvider @default(STRIPE)
+
+  // The Stripe PaymentIntent ID unique per payment attempt
+  stripePaymentIntentId String @unique
+
+  // Who paid
+  tenantId String
+  tenant   User   @relation(fields: [tenantId], references: [id])
+
+  // Which rental this payment is for one rental has one payment max
+  rentalRequestId String        @unique
+  rentalRequest   RentalRequest @relation(fields: [rentalRequestId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}
