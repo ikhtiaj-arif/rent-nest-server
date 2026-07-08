@@ -50,7 +50,7 @@ const createPayment = async (
     line_items: [
       {
         price_data: {
-          currency: "usd",
+          currency: "bdt",
           unit_amount: amountInCents,
           product_data: {
             name: rentalRequest.property.title,
@@ -73,7 +73,7 @@ const createPayment = async (
   const payment = await prisma.payment.create({
     data: {
       amount: rentalRequest.property.price,
-      currency: "usd",
+      currency: "bdt",
       status: PaymentStatus.PENDING,
       stripePaymentIntentId: session.id, // storing session.id
       tenantId,
@@ -100,7 +100,7 @@ const createPayment = async (
     sessionId: session.id,
     paymentId: payment.id,
     amount: rentalRequest.property.price,
-    currency: "usd",
+    currency: "bdt",
     payment,
   };
 };
@@ -260,8 +260,53 @@ const getUserPayments = async (
   };
 };
 
+const getPaymentById = async (
+  paymentId: string,
+  tenantId: string,
+  role: string,
+) => {
+  const payment = await prisma.payment.findUnique({
+    where: { id: paymentId },
+    include: {
+      rentalRequest: {
+        include: {
+          property: {
+            select: {
+              id: true,
+              title: true,
+              city: true,
+              price: true,
+            },
+          },
+          tenant: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phone: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!payment) {
+    throw new Error("Payment not found");
+  }
+
+  if (role !== "ADMIN" && payment.tenantId !== tenantId) {
+    throw new Error(
+      "Forbidden. You do not have permission to view this payment",
+    );
+  }
+
+  return payment;
+};
+
 export const paymentService = {
   createPayment,
   handleStripeWebhook,
   getUserPayments,
+  getPaymentById,
 };

@@ -66,8 +66,26 @@ const getPayments = catchAsync(
   },
 );
 
+const getPaymentById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const tenantId = req.user!.id;
+    const role = req.user!.role;
+
+    const result = await paymentService.getPaymentById(id!, tenantId, role);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment retrieved successfully",
+      data: result,
+    });
+  },
+);
+
 export const paymentController = {
   createPayment,
   confirmPayment,
   getPayments,
+  getPaymentById,
 };
