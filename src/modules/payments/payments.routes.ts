@@ -10,4 +10,7 @@ const router = Router();
 router.post("/create", auth(Role.TENANT), paymentController.createPayment);
 
 router.post("/confirm", paymentController.confirmPayment);
+
+router.get("/", auth(Role.TENANT, Role.ADMIN), paymentController.getPayments);
+
 export const paymentRoutes = router;

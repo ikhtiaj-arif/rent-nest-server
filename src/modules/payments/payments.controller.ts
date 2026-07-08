@@ -6,7 +6,6 @@ import { catchAsync } from "src/utils/catchAsync";
 import { sendResponse } from "src/utils/sendResponse";
 import { paymentService } from "./payments.service";
 
-
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user!.id;
@@ -47,10 +46,28 @@ const confirmPayment = catchAsync(
     });
   },
 );
+const getPayments = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const tenantId = req.user!.id;
+    const role = req.user!.role;
+    const result = await paymentService.getUserPayments(
+      tenantId,
+      role,
+      req.query,
+    );
 
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payments retrieved successfully",
+      data: result.data,
+      meta: result.meta,
+    });
+  },
+);
 
 export const paymentController = {
   createPayment,
-  confirmPayment
- 
+  confirmPayment,
+  getPayments,
 };

@@ -3,8 +3,6 @@ import { prisma } from "src/lib/prisma";
 import { stripe } from "src/lib/stripe";
 import { ICreatePaymentPayload, IPaymentQuery } from "./payment.interface";
 
-
-
 const createPayment = async (
   payload: ICreatePaymentPayload,
   tenantId: string,
@@ -64,7 +62,7 @@ const createPayment = async (
     ],
     success_url: `${process.env.APP_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.APP_URL}/payment-cancel`,
-    
+
     metadata: {
       rentalRequestId,
       tenantId,
@@ -106,7 +104,6 @@ const createPayment = async (
     payment,
   };
 };
-
 
 const handleStripeWebhook = async (
   rawBody: Buffer,
@@ -214,10 +211,57 @@ const handlePaymentFailure = async (sessionId: string) => {
   }
 };
 
+const getUserPayments = async (
+  tenantId: string,
+  role: string,
+  query: IPaymentQuery,
+) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
 
+  const sortBy = query.sortBy || "createdAt";
+  const sortOrder = query.sortOrder || "desc";
+
+  const whereCondition = role === "ADMIN" ? {} : { tenantId };
+
+  const [payments, total] = await prisma.$transaction([
+    prisma.payment.findMany({
+      where: whereCondition,
+      skip,
+      take: limit,
+      orderBy: { [sortBy]: sortOrder },
+      include: {
+        rentalRequest: {
+          include: {
+            property: {
+              select: {
+                id: true,
+                title: true,
+                city: true,
+                price: true,
+              },
+            },
+          },
+        },
+      },
+    }),
+    prisma.payment.count({ where: whereCondition }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+    data: payments,
+  };
+};
 
 export const paymentService = {
   createPayment,
-  handleStripeWebhook
-
+  handleStripeWebhook,
+  getUserPayments,
 };
