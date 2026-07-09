@@ -1,3 +1,5 @@
-node_modules
+
 .env
 RentNest_Implementation_Roadmap.md
+node_modules
+dist

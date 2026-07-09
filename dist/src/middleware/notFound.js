@@ -1,9 +1,0 @@
-export const notFound = (req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Route Not Found",
-        path: req.originalUrl,
-        date: Date(),
-    });
-};
-//# sourceMappingURL=notFound.js.map
