@@ -104,7 +104,8 @@ const getAllUsers = async (query: IUserQuery) => {
 const updateUserById = async (
   userId: string,
   payload: {
-    status: UserStatus;
+    status?: UserStatus;
+    role?: Role;
   },
 ) => {
   const user = await prisma.user.findUnique({
@@ -117,19 +118,36 @@ const updateUserById = async (
     throw new Error("User not found");
   }
 
-  const status = payload.status.toUpperCase() as UserStatus;
+  const data: {
+    status?: UserStatus;
+    role?: Role;
+  } = {};
 
-  if (!Object.values(UserStatus).includes(status)) {
-    throw new Error("Invalid user status");
+  if (payload.status) {
+    const status = payload.status.toUpperCase() as UserStatus;
+
+    if (!Object.values(UserStatus).includes(status)) {
+      throw new Error("Invalid user status");
+    }
+
+    data.status = status;
+  }
+
+  if (payload.role) {
+    const role = payload.role.toUpperCase() as Role;
+
+    if (!Object.values(Role).includes(role)) {
+      throw new Error("Invalid user role");
+    }
+
+    data.role = role;
   }
 
   const result = await prisma.user.update({
     where: {
       id: userId,
     },
-    data: {
-      status,
-    },
+    data,
     select: {
       id: true,
       name: true,
