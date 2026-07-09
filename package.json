@@ -2,7 +2,7 @@
   "name": "rent-nest-server",
   "version": "1.0.0",
   "description": "RentNest - Rental Property Marketplace API",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
