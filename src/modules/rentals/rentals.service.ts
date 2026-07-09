@@ -1,6 +1,7 @@
-import { RentalStatus } from "generated/prisma/enums";
-import { RentalRequestWhereInput } from "generated/prisma/models";
-import { prisma } from "src/lib/prisma";
+
+import { RentalStatus } from "../../../generated/prisma/enums";
+import { RentalRequestWhereInput } from "../../../generated/prisma/models";
+import { prisma } from "../../lib/prisma";
 import {
   ICreateRentalPayload,
   ILandlordRentalQuery,

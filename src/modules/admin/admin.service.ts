@@ -1,8 +1,8 @@
 // Admin Service placeholder
 
-import { Role, UserStatus } from "generated/prisma/enums";
-import { UserWhereInput } from "generated/prisma/models";
-import { prisma } from "src/lib/prisma";
+import { Role, UserStatus } from "../../../generated/prisma/enums";
+import { UserWhereInput } from "../../../generated/prisma/models";
+import { prisma } from "../../lib/prisma";
 import { IUserQuery } from "../auth/auth.interface";
 
 const getAllUsers = async (query: IUserQuery) => {

@@ -1,9 +1,10 @@
 import bcrypt from "bcryptjs";
 import { SignOptions } from "jsonwebtoken";
-import config from "src/config";
-import { prisma } from "src/lib/prisma";
-import { jwtUtils } from "src/utils/jwt";
+ 
 import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
+import { prisma } from "../../lib/prisma";
+import { jwtUtils } from "../../utils/jwt";
+import config from "../../config";
 
 // Auth Service placeholder
 const registerDB = async (payload: IRegisterUserPayload) => {

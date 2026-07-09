@@ -1,6 +1,7 @@
-import { PaymentStatus, RentalStatus } from "generated/prisma/enums";
-import { prisma } from "src/lib/prisma";
-import { stripe } from "src/lib/stripe";
+ 
+import { PaymentStatus, RentalStatus } from "../../../generated/prisma/enums";
+import { prisma } from "../../lib/prisma";
+import { stripe } from "../../lib/stripe";
 import { ICreatePaymentPayload, IPaymentQuery } from "./payment.interface";
 
 const createPayment = async (

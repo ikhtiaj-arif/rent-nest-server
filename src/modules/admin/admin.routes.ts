@@ -1,6 +1,7 @@
 // Admin Routes placeholder
+ 
 import { Router } from "express";
-import { auth } from "src/middleware/auth";
+import { auth } from "../../middleware/auth";
 import { propertiesController } from "../properties/properties.controller";
 import { rentalController } from "../rentals/rentals.controller";
 import { adminController } from "./admin.controller";

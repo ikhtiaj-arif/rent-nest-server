@@ -1,5 +1,6 @@
-import { RentalStatus } from "generated/prisma/enums";
-import { prisma } from "src/lib/prisma";
+
+import { RentalStatus } from "../../../generated/prisma/enums";
+import { prisma } from "../../lib/prisma";
 import { ICreateReviewPayload } from "./reviews.interface";
 
 // Reviews Service placeholder

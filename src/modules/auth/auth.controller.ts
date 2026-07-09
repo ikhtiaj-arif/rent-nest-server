@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { catchAsync } from "src/utils/catchAsync";
-import { authService } from "./auth.service";
-import { sendResponse } from "src/utils/sendResponse";
+ 
 import httpStatus from "http-status";
+import { catchAsync } from "../../utils/catchAsync";
+import { authService } from "./auth.service";
+import { sendResponse } from "../../utils/sendResponse";
 
 // Auth Controller placeholder
 const register = catchAsync(

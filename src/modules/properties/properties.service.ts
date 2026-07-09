@@ -1,7 +1,9 @@
 // Properties Service placeholder
 
-import { PropertyWhereInput } from "generated/prisma/models";
-import { prisma } from "src/lib/prisma";
+ 
+import { Prisma } from "../../../generated/prisma/client";
+import { PropertyWhereInput } from "../../../generated/prisma/models";
+import { prisma } from "../../lib/prisma";
 import { IPropertyPayload, IPropertyQuery } from "./properties.interface";
 
 const createProperty = async (payload: IPropertyPayload, userId: string) => {

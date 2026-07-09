@@ -1,9 +1,10 @@
 // Admin Controller placeholder
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { catchAsync } from "src/utils/catchAsync";
-import { sendResponse } from "src/utils/sendResponse";
+ 
 import { adminService } from "./admin.service";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
 
 const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

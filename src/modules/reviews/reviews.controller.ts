@@ -2,9 +2,10 @@
 // Rentals Controller placeholder
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { catchAsync } from "src/utils/catchAsync";
-import { sendResponse } from "src/utils/sendResponse";
+ 
 import { reviewService } from "./reviews.service";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
 
 const createReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
