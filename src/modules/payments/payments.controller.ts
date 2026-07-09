@@ -9,8 +9,8 @@ import config from "../../config";
 
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const tenantId = req.user!.id;
-    const result = await paymentService.createPayment(req.body, tenantId);
+    const tenantId = req.user?.id;
+    const result = await paymentService.createPayment(req.body, tenantId!);
 
     sendResponse(res, {
       success: true,

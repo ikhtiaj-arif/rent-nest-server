@@ -12,18 +12,18 @@ RentNest is a backend REST API for a rental property marketplace. Landlords list
 
 | Resource                        | Link                                                  |
 | ------------------------------- | ----------------------------------------------------- |
-| **Live API**                    | `https://<your-app>.vercel.app`                       |
-| **API Documentation (Postman)** | `https://documenter.getpostman.com/view/<your-id>`    |
-| **Demo Video**                  | `https://drive.google.com/file/d/<your-id>/view`      |
-| **GitHub Repository**           | `https://github.com/<your-username>/rentnest-backend` |
+| **Live API**                    | `https://rent-nest-server-gial.onrender.com/`                       |
+| **API Documentation (Postman)** | `https://github.com/ikhtiaj-arif/rentnest-postman/blob/main/RENT_NEST%20Copy.postman_collection.json`    |
+| **Demo Video**                  | `https://drive.google.com/file/d/1NKofN7iw1-8w0J0I9gwpw724Gxxk5bVy/view?usp=sharing`      |
+| **GitHub Repository**           | `https://github.com/ikhtiaj-arif/rent-nest-server` |
 
 ---
 
 ## 🔑 Admin Credentials
 
 ```
-Email:    admin@rentnest.com
-Password: <set-a-real-password-here>
+Email:    admin@example.com
+Password: SuperSecurePassword123!
 ```
 
 > ⚠️ These are seeded credentials for evaluation purposes only. Change them before any real deployment.
@@ -72,34 +72,6 @@ PENDING → APPROVED → PAYMENT → ACTIVE → COMPLETED
 
 ---
 
-## 📦 Business logic
-Property Listed
-        │
-        ▼
-Tenant submits rental request
-        │
-        ▼
-Status = PENDING
-        │
-        ▼
-Landlord reviews request
-        │
- ┌──────┴─────────┐
- │                │
-Reject         Approve
- │                │
- ▼                ▼
-REJECTED      APPROVED
-                    │
-          Tenant makes payment
-                    │
-      ┌─────────────┴──────────────┐
-      │                            │
-Payment Failed              Payment Successful
-      │                            │
-      ▼                            ▼
-Still APPROVED             ACTIVE RENTAL
-                             Property unavailable
 
 
 
@@ -128,6 +100,36 @@ src/
 └── app.ts
 └── server.ts
 ```
+
+## 📦 Rental logic
+Property Listed
+        │
+        ▼
+Tenant submits rental request
+        │
+        ▼
+Status = PENDING
+        │
+        ▼
+Landlord reviews request
+        │
+ ┌──────┴─────────┐
+ │                │
+Reject         Approve
+ │                │
+ ▼                ▼
+REJECTED      APPROVED
+                    │
+          Tenant makes payment
+                    │
+      ┌─────────────┴──────────────┐
+      │                            │
+Payment Failed              Payment Successful
+      │                            │
+      ▼                            ▼
+Still APPROVED             ACTIVE RENTAL
+                             Property unavailable
+
 
 ---
 
