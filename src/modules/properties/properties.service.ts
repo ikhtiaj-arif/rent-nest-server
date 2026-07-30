@@ -10,8 +10,21 @@ const createProperty = async (
   files: Express.Multer.File[],
   userId: string,
 ) => {
-  const { title, city, price, categoryName, categoryDescription } = payload;
- 
+  const {
+    title,
+    city,
+    price,
+    area,
+    bedrooms,
+    bathrooms,
+    address,
+    description,
+    categoryName,
+    categoryDescription,
+    availableFrom,
+    furnished,
+  } = payload;
+  const isFurnished = furnished === "true";
 
   const landlordId = userId;
 
@@ -38,6 +51,13 @@ const createProperty = async (
         title,
         city,
         price: Number(price),
+        area: Number(area),
+        bedrooms: Number(bedrooms),
+        bathrooms: Number(bathrooms),
+        address,
+        description,
+        availableFrom,
+        furnished: isFurnished,
         landlordId,
         categoryId: category.id,
       },
@@ -386,6 +406,156 @@ const getPropertiesFilterOptions = async () => {
   };
 };
 
+const getOwnProperties = async (query: IPropertyQuery, ownerId:string) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy || "createdAt";
+  const sortOrder = query.sortOrder || "desc";
+
+  const andConditions: PropertyWhereInput[] = [  {
+    landlordId: ownerId,
+  }];
+
+  // Search
+  if (query.searchTerm) {
+    andConditions.push({
+      OR: [
+        {
+          title: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
+        {
+          city: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
+        {
+          landlord: {
+            name: {
+              contains: query.searchTerm,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          landlord: {
+            email: {
+              contains: query.searchTerm,
+              mode: "insensitive",
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  // Title
+  if (query.title) {
+    andConditions.push({
+      title: {
+        contains: query.title,
+        mode: "insensitive",
+      },
+    });
+  }
+
+  // City
+  if (query.city) {
+    andConditions.push({
+      city: {
+        equals: query.city,
+        mode: "insensitive",
+      },
+    });
+  }
+
+  // Price Range
+  if (query.minPrice || query.maxPrice) {
+    andConditions.push({
+      price: {
+        gte: query.minPrice ? Number(query.minPrice) : undefined,
+        lte: query.maxPrice ? Number(query.maxPrice) : undefined,
+      },
+    });
+  }
+
+  // Category
+  if (query.type) {
+    andConditions.push({
+      category: {
+        name: {
+          equals: query.type,
+          mode: "insensitive",
+        },
+      },
+    });
+  }
+
+  // Availability
+  if (query.isAvailable !== undefined) {
+    andConditions.push({
+      isAvailable: query.isAvailable === "true",
+    });
+  }
+
+
+
+  const where: PropertyWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  const [properties, total] = await prisma.$transaction([
+    prisma.property.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      include: {
+        category: true,
+        landlord: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        images: {
+          orderBy: {
+            displayOrder: "asc",
+          },
+        },
+        _count: {
+          select: {
+            rentalRequests: true,
+            reviews: true,
+          },
+        },
+      },
+    }),
+
+    prisma.property.count({
+      where,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+    data: properties,
+  };
+};
+
 export const propertiesService = {
   createProperty,
   getAllProperties,
@@ -394,4 +564,5 @@ export const propertiesService = {
   updateProperty,
   deleteProperty,
   getPropertiesFilterOptions,
+  getOwnProperties
 };

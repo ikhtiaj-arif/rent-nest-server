@@ -2,6 +2,13 @@ export interface IPropertyPayload {
   title: string;
   city: string;
   price: number;
+  area: number;
+  bedrooms: number;
+  bathrooms: number;
+  address: string;
+  description: string;
+  availableFrom: string;
+  furnished: string;
   categoryName: string;
   categoryDescription: string;
 }

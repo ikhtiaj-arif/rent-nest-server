@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
-import { SignOptions } from "jsonwebtoken";
- 
-import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
+import { JwtPayload, SignOptions } from "jsonwebtoken";
+
+import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import { jwtUtils } from "../../utils/jwt";
-import config from "../../config";
+import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
 
 // Auth Service placeholder
 const registerDB = async (payload: IRegisterUserPayload) => {
@@ -72,17 +72,14 @@ const loginUser = async (payload: ILoginUser) => {
   const accessToken = jwtUtils.createToken(
     jwtPayload,
     config.jwt_access_secret,
-    {
-      expiresIn: config.jwt_access_expires_in,
-    } as SignOptions,
+    
+    config.jwt_access_expires_in as SignOptions,
   );
 
   const refreshToken = jwtUtils.createToken(
     jwtPayload,
     config.jwt_refresh_secret,
-    {
-      expiresIn: config.jwt_refresh_expires_in,
-    } as SignOptions,
+     config.jwt_refresh_expires_in as SignOptions,
   );
 
   return { accessToken, refreshToken };
@@ -99,8 +96,48 @@ const getUserProfile = async (userId: string) => {
   return user;
 };
 
+const refreshToken = async (refreshToken: string) => {
+
+  const verifiedRefreshToken = jwtUtils.verifyToken(
+    refreshToken,
+    config.jwt_refresh_secret,
+  );
+
+  if (!verifiedRefreshToken.success) {
+    throw new Error(verifiedRefreshToken.error);
+  }
+
+  const { id } = verifiedRefreshToken.data as JwtPayload;
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  if (user.status === "BANNED") {
+    throw new Error("User is blocked!");
+  }
+
+  const jwtPayload = {
+    id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
+
+  const accessToken = jwtUtils.createToken(
+    jwtPayload,
+    config.jwt_access_secret,
+    config.jwt_access_expires_in as SignOptions,
+  );
+
+  return { accessToken };
+};
+
 export const authService = {
   registerDB,
   loginUser,
   getUserProfile,
+  refreshToken,
 };

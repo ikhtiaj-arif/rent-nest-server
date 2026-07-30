@@ -17,6 +17,19 @@ const getAllProperties = catchAsync(
     });
   },
 );
+const getOwnProperties = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+    const ownerId = req?.user?.id!;
+    const result = await propertiesService.getOwnProperties(query, ownerId);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All properties retrieved successfully",
+      data: result,
+    });
+  },
+);
 
 const getPropertyById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -105,5 +118,5 @@ export const propertiesController = {
   getPropertiesFilterOptions,
   createProperty,
   updateProperty,
-  deleteProperty,
+  deleteProperty,getOwnProperties
 };

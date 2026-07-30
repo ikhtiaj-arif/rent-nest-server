@@ -4,6 +4,10 @@ model Property {
   city          String
   price         Float
   area          Float?
+  description   String?
+  address       String?
+  bedrooms      Int?
+  bathrooms     Int?
   isAvailable   Boolean   @default(true)
   availableFrom DateTime?
   furnished     Boolean   @default(false)
