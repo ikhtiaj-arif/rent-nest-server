@@ -1,9 +1,12 @@
 model Property {
-  id          String  @id @default(uuid())
-  title       String
-  city        String
-  price       Float
-  isAvailable Boolean @default(true)
+  id            String    @id @default(uuid())
+  title         String
+  city          String
+  price         Float
+  area          Float?
+  isAvailable   Boolean   @default(true)
+  availableFrom DateTime?
+  furnished     Boolean   @default(false)
 
   landlordId String
   landlord   User   @relation(fields: [landlordId], references: [id])
