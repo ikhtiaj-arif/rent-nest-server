@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
- 
-import { propertiesService } from "./properties.service";
+
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import { propertiesService } from "./properties.service";
 
 const getAllProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -34,6 +34,17 @@ const getPropertyById = catchAsync(
 const getPropertyCategories = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await propertiesService.getPropertyCategories();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property categories retrieved successfully",
+      data: result,
+    });
+  },
+);
+const getPropertiesFilterOptions = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await propertiesService.getPropertiesFilterOptions();
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -86,6 +97,7 @@ export const propertiesController = {
   getAllProperties,
   getPropertyById,
   getPropertyCategories,
+  getPropertiesFilterOptions,
   createProperty,
   updateProperty,
   deleteProperty,

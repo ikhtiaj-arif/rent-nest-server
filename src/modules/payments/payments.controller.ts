@@ -1,11 +1,11 @@
 // Payments Controller placeholder
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
- 
-import { paymentService } from "./payments.service";
+
+import config from "../../config";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-import config from "../../config";
+import { paymentService } from "./payments.service";
 
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -61,8 +61,8 @@ const getPayments = catchAsync(
       success: true,
       statusCode: httpStatus.OK,
       message: "Payments retrieved successfully",
-      data: result.data,
       meta: result.meta,
+      data: result.data,
     });
   },
 );

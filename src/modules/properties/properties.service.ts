@@ -211,15 +211,7 @@ const getPropertyById = async (propertyId: string) => {
 
   return result;
 };
-const getPropertyCategories = async () => {
-  const result = await prisma.category.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
 
-  return result;
-};
 
 const updateProperty = async (
   propertyId: string,
@@ -317,11 +309,45 @@ const deleteProperty = async (propertyId: string) => {
   return null;
 };
 
+const getPropertyCategories = async () => {
+  const result = await prisma.category.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return result;
+};
+
+const getPropertiesFilterOptions = async () => {
+  const [categories, cities] = await Promise.all([
+    prisma.category.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+    prisma.property.findMany({
+      select: {
+        city: true,
+      },
+      distinct: ["city"],
+      orderBy: {
+        city: "asc",
+      },
+    }),
+  ]);
+
+  return {
+    categories,
+    cities: cities.map((item) => item.city),
+  };
+};
+
 export const propertiesService = {
   createProperty,
   getAllProperties,
   getPropertyById,
   getPropertyCategories,
   updateProperty,
-  deleteProperty,
+  deleteProperty, getPropertiesFilterOptions
 };
