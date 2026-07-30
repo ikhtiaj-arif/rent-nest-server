@@ -54,6 +54,7 @@ export const ModelName = {
   Category: 'Category',
   Payment: 'Payment',
   Property: 'Property',
+  PropertyImage: 'PropertyImage',
   RentalRequest: 'RentalRequest',
   Review: 'Review',
   User: 'User'
@@ -117,6 +118,24 @@ export const PropertyScalarFieldEnum = {
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
+
+
+export const PropertyImageScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  url: 'url',
+  storageKey: 'storageKey',
+  displayOrder: 'displayOrder',
+  isPrimary: 'isPrimary',
+  altText: 'altText',
+  width: 'width',
+  height: 'height',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  createdAt: 'createdAt'
+} as const
+
+export type PropertyImageScalarFieldEnum = (typeof PropertyImageScalarFieldEnum)[keyof typeof PropertyImageScalarFieldEnum]
 
 
 export const RentalRequestScalarFieldEnum = {

@@ -1,15 +1,26 @@
 // Properties Service placeholder
 
- 
-import { Prisma } from "../../../generated/prisma/client";
 import { PropertyWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
+import { ImageService } from "../image/image.service";
 import { IPropertyPayload, IPropertyQuery } from "./properties.interface";
 
-const createProperty = async (payload: IPropertyPayload, userId: string) => {
+const createProperty = async (
+  payload: IPropertyPayload,
+  files: Express.Multer.File[],
+  userId: string,
+) => {
   const { title, city, price, categoryName, categoryDescription } = payload;
+ 
 
   const landlordId = userId;
+
+  const uploadedImages =
+    files?.length > 0
+      ? await ImageService.uploadMultipleImages(files, {
+          folder: "properties",
+        })
+      : [];
 
   const result = await prisma.$transaction(async (tx) => {
     //? transaction-1: upsert category
@@ -26,13 +37,41 @@ const createProperty = async (payload: IPropertyPayload, userId: string) => {
       data: {
         title,
         city,
-        price,
+        price: Number(price),
         landlordId,
         categoryId: category.id,
       },
       include: { category: true },
     });
-    return property;
+    //? transaction-3: create property images
+    if (uploadedImages.length) {
+      await tx.propertyImage.createMany({
+        data: uploadedImages.map((image, index) => ({
+          propertyId: property.id,
+          url: image.url,
+          storageKey: image.storageKey,
+          width: image.width,
+          height: image.height,
+          fileSize: image.fileSize,
+          mimeType: image.mimeType,
+          displayOrder: index,
+          isPrimary: index === 0,
+        })),
+      });
+    }
+    return tx.property.findUnique({
+      where: {
+        id: property.id,
+      },
+      include: {
+        category: true,
+        images: {
+          orderBy: {
+            displayOrder: "asc",
+          },
+        },
+      },
+    });
   });
   return result;
 };
@@ -160,6 +199,11 @@ const getAllProperties = async (query: IPropertyQuery) => {
             phone: true,
           },
         },
+        images: {
+          orderBy: {
+            displayOrder: "asc",
+          },
+        },
         _count: {
           select: {
             rentalRequests: true,
@@ -211,7 +255,6 @@ const getPropertyById = async (propertyId: string) => {
 
   return result;
 };
-
 
 const updateProperty = async (
   propertyId: string,
@@ -349,5 +392,6 @@ export const propertiesService = {
   getPropertyById,
   getPropertyCategories,
   updateProperty,
-  deleteProperty, getPropertiesFilterOptions
+  deleteProperty,
+  getPropertiesFilterOptions,
 };

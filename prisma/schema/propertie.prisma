@@ -12,6 +12,7 @@ model Property {
   category   Category @relation(fields: [categoryId], references: [id])
 
   rentalRequests RentalRequest[]
+  images         PropertyImage[]
   reviews        Review[]
   averageRating  Float           @default(0)
   totalReviews   Int             @default(0)
@@ -20,4 +21,38 @@ model Property {
   updatedAt DateTime @updatedAt
 
   @@map("properties")
+}
+
+model PropertyImage {
+  id String @id @default(cuid())
+
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  // Optimized CDN URL
+  url String
+
+  // Cloudinary public_id or S3 object key -> makes replacing or deleting image simple
+  storageKey String
+
+  /// Used for gallery ordering
+  displayOrder Int @default(0)
+
+  /// Property thumbnail/cover image
+  isPrimary Boolean @default(false)
+
+  /// Accessibility
+  altText String?
+
+  /// Optional metadata
+  width    Int?
+  height   Int?
+  fileSize Int?
+  mimeType String?
+
+  createdAt DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([propertyId, displayOrder])
+  @@index([propertyId, isPrimary])
 }

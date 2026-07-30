@@ -57,6 +57,11 @@ export type Payment = Prisma.PaymentModel
  */
 export type Property = Prisma.PropertyModel
 /**
+ * Model PropertyImage
+ * 
+ */
+export type PropertyImage = Prisma.PropertyImageModel
+/**
  * Model RentalRequest
  * 
  */
