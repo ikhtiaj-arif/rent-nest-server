@@ -230,6 +230,8 @@ const getAllProperties = async (query: IPropertyQuery) => {
             reviews: true,
           },
         },
+        reviews: true,
+        rentalRequests: true,
       },
     }),
 
@@ -262,6 +264,11 @@ const getPropertyById = async (propertyId: string) => {
           email: true,
           phone: true,
           // role: true,
+        },
+      },
+      images: {
+        orderBy: {
+          displayOrder: "asc",
         },
       },
       reviews: true,
@@ -406,7 +413,7 @@ const getPropertiesFilterOptions = async () => {
   };
 };
 
-const getOwnProperties = async (query: IPropertyQuery, ownerId:string) => {
+const getOwnProperties = async (query: IPropertyQuery, ownerId: string) => {
   const limit = query.limit ? Number(query.limit) : 10;
   const page = query.page ? Number(query.page) : 1;
   const skip = (page - 1) * limit;
@@ -414,9 +421,11 @@ const getOwnProperties = async (query: IPropertyQuery, ownerId:string) => {
   const sortBy = query.sortBy || "createdAt";
   const sortOrder = query.sortOrder || "desc";
 
-  const andConditions: PropertyWhereInput[] = [  {
-    landlordId: ownerId,
-  }];
+  const andConditions: PropertyWhereInput[] = [
+    {
+      landlordId: ownerId,
+    },
+  ];
 
   // Search
   if (query.searchTerm) {
@@ -503,8 +512,6 @@ const getOwnProperties = async (query: IPropertyQuery, ownerId:string) => {
     });
   }
 
-
-
   const where: PropertyWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
@@ -564,5 +571,5 @@ export const propertiesService = {
   updateProperty,
   deleteProperty,
   getPropertiesFilterOptions,
-  getOwnProperties
+  getOwnProperties,
 };

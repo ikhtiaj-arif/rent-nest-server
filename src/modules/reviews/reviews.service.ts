@@ -46,10 +46,9 @@ const createReview = async (
   }
 
   //? Step 4 — Duplicate check: one review per rental request
-  const existingReview = await prisma.review.findUnique({
-    where: { id: rentalRequestId },
-  });
-
+ const existingReview = await prisma.review.findFirst({
+  where: { rentalRequestId },
+});
   if (existingReview) {
     throw new Error("You have already reviewed this rental");
   }

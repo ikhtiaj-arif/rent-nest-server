@@ -1,4 +1,3 @@
-
 import { RentalStatus } from "../../../generated/prisma/enums";
 import { RentalRequestWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
@@ -135,6 +134,25 @@ const getRentalsById = async (rentalId: string) => {
       property: {
         include: {
           category: true,
+        },
+      },
+      payment: {
+        select: {
+          id: true,
+          status: true,
+          amount: true,
+          currency: true,
+          provider: true,
+          createdAt: true,
+        },
+      },
+
+      reviews: {
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
         },
       },
     },
@@ -379,6 +397,23 @@ const getAllRentals = async (query: IRentalQuery) => {
                 phone: true,
               },
             },
+          },
+        },
+
+        payment: {
+          select: {
+            id: true,
+            status: true,
+            amount: true,
+            currency: true,
+            provider: true,
+            createdAt: true,
+          },
+        },
+
+        reviews: {
+          select: {
+            id: true,
           },
         },
       },
