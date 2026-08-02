@@ -1,8 +1,8 @@
 import { Router } from "express";
- 
-import { rentalController } from "./rentals.controller";
-import { auth } from "../../middleware/auth";
+
 import { Role } from "../../../generated/prisma/enums";
+import { auth } from "../../middleware/auth";
+import { rentalController } from "./rentals.controller";
 
 // Rentals Routes placeholder
 const router = Router();
@@ -14,6 +14,10 @@ router.get(
   auth(Role.TENANT, Role.ADMIN),
   rentalController.getUserRentalRequests,
 );
-router.get("/:id", rentalController.getRentalById);
+router.get(
+  "/:id",
+  auth(Role.TENANT, Role.ADMIN),
+  rentalController.getRentalById,
+);
 
 export const rentalRoutes = router;
