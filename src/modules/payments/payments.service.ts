@@ -1,4 +1,3 @@
- 
 import { PaymentStatus, RentalStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { stripe } from "../../lib/stripe";
@@ -187,7 +186,7 @@ const handlePaymentSuccess = async (
       ? [
           prisma.property.update({
             where: { id: propertyId },
-            data: { isAvailable: false },
+            data: { onRent: true, isAvailable: false },
           }),
         ]
       : []),
