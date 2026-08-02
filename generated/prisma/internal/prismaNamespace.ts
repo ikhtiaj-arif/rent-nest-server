@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Category: 'Category',
+  LandlordRequest: 'LandlordRequest',
   Payment: 'Payment',
   Property: 'Property',
   PropertyImage: 'PropertyImage',
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "payment" | "property" | "propertyImage" | "rentalRequest" | "review" | "user"
+    modelProps: "category" | "landlordRequest" | "payment" | "property" | "propertyImage" | "rentalRequest" | "review" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -481,6 +482,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CategoryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    LandlordRequest: {
+      payload: Prisma.$LandlordRequestPayload<ExtArgs>
+      fields: Prisma.LandlordRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LandlordRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LandlordRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.LandlordRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LandlordRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        findMany: {
+          args: Prisma.LandlordRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>[]
+        }
+        create: {
+          args: Prisma.LandlordRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        createMany: {
+          args: Prisma.LandlordRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LandlordRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.LandlordRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        update: {
+          args: Prisma.LandlordRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.LandlordRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LandlordRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LandlordRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.LandlordRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.LandlordRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLandlordRequest>
+        }
+        groupBy: {
+          args: Prisma.LandlordRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandlordRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LandlordRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandlordRequestCountAggregateOutputType> | number
         }
       }
     }
@@ -978,6 +1053,20 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+export const LandlordRequestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  requestReason: 'requestReason',
+  rejectionReason: 'rejectionReason',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LandlordRequestScalarFieldEnum = (typeof LandlordRequestScalarFieldEnum)[keyof typeof LandlordRequestScalarFieldEnum]
+
+
 export const PaymentScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
@@ -1067,11 +1156,16 @@ export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof 
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name',
   password: 'password',
+  name: 'name',
+  phone: 'phone',
+  profilePicture: 'profilePicture',
+  bio: 'bio',
+  gender: 'gender',
+  dateOfBirth: 'dateOfBirth',
+  address: 'address',
   role: 'role',
   status: 'status',
-  phone: 'phone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1134,6 +1228,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LandlordRequestStatus'
+ */
+export type EnumLandlordRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LandlordRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LandlordRequestStatus[]'
+ */
+export type ListEnumLandlordRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LandlordRequestStatus[]'>
     
 
 
@@ -1211,6 +1319,20 @@ export type EnumRentalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'RentalStatus[]'
  */
 export type ListEnumRentalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentalStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Gender'
+ */
+export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
+    
+
+
+/**
+ * Reference to a field of type 'Gender[]'
+ */
+export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
     
 
 
@@ -1352,6 +1474,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
+  landlordRequest?: Prisma.LandlordRequestOmit
   payment?: Prisma.PaymentOmit
   property?: Prisma.PropertyOmit
   propertyImage?: Prisma.PropertyImageOmit

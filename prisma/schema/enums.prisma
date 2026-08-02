@@ -28,3 +28,15 @@ enum PaymentStatus {
   COMPLETED
   FAILED
 }
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum LandlordRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

@@ -1,16 +1,26 @@
 model User {
   id       String     @id @default(uuid())
   email    String     @unique
-  name     String
   password String
-  role     Role       @default(TENANT)
-  status   UserStatus @default(ACTIVE)
+
+  name     String
   phone    String?
+
+  profilePicture String?
+  bio            String? @db.Text
+  gender         Gender?
+  dateOfBirth    DateTime?
+  address        String?
+
+  role   Role       @default(TENANT)
+  status UserStatus @default(ACTIVE)
+
 
   properties     Property[]
   rentalRequests RentalRequest[]
   reviews        Review[]
   payments       Payment[]
+   landlordRequest   LandlordRequest?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

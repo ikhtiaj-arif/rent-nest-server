@@ -27,11 +27,16 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
-  name: string | null
   password: string | null
+  name: string | null
+  phone: string | null
+  profilePicture: string | null
+  bio: string | null
+  gender: $Enums.Gender | null
+  dateOfBirth: Date | null
+  address: string | null
   role: $Enums.Role | null
   status: $Enums.UserStatus | null
-  phone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,11 +44,16 @@ export type UserMinAggregateOutputType = {
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
-  name: string | null
   password: string | null
+  name: string | null
+  phone: string | null
+  profilePicture: string | null
+  bio: string | null
+  gender: $Enums.Gender | null
+  dateOfBirth: Date | null
+  address: string | null
   role: $Enums.Role | null
   status: $Enums.UserStatus | null
-  phone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,11 +61,16 @@ export type UserMaxAggregateOutputType = {
 export type UserCountAggregateOutputType = {
   id: number
   email: number
-  name: number
   password: number
+  name: number
+  phone: number
+  profilePicture: number
+  bio: number
+  gender: number
+  dateOfBirth: number
+  address: number
   role: number
   status: number
-  phone: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,11 +80,16 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
-  name?: true
   password?: true
+  name?: true
+  phone?: true
+  profilePicture?: true
+  bio?: true
+  gender?: true
+  dateOfBirth?: true
+  address?: true
   role?: true
   status?: true
-  phone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,11 +97,16 @@ export type UserMinAggregateInputType = {
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
-  name?: true
   password?: true
+  name?: true
+  phone?: true
+  profilePicture?: true
+  bio?: true
+  gender?: true
+  dateOfBirth?: true
+  address?: true
   role?: true
   status?: true
-  phone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -89,11 +114,16 @@ export type UserMaxAggregateInputType = {
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
-  name?: true
   password?: true
+  name?: true
+  phone?: true
+  profilePicture?: true
+  bio?: true
+  gender?: true
+  dateOfBirth?: true
+  address?: true
   role?: true
   status?: true
-  phone?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -174,11 +204,16 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   email: string
-  name: string
   password: string
+  name: string
+  phone: string | null
+  profilePicture: string | null
+  bio: string | null
+  gender: $Enums.Gender | null
+  dateOfBirth: Date | null
+  address: string | null
   role: $Enums.Role
   status: $Enums.UserStatus
-  phone: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -207,33 +242,45 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  address?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   properties?: Prisma.PropertyListRelationFilter
   rentalRequests?: Prisma.RentalRequestListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  landlordRequest?: Prisma.XOR<Prisma.LandlordRequestNullableScalarRelationFilter, Prisma.LandlordRequestWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   properties?: Prisma.PropertyOrderByRelationAggregateInput
   rentalRequests?: Prisma.RentalRequestOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  landlordRequest?: Prisma.LandlordRequestOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -242,27 +289,38 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
+  bio?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  address?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   properties?: Prisma.PropertyListRelationFilter
   rentalRequests?: Prisma.RentalRequestListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  landlordRequest?: Prisma.XOR<Prisma.LandlordRequestNullableScalarRelationFilter, Prisma.LandlordRequestWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -276,11 +334,16 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  name?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
+  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  profilePicture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null
+  dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
-  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -288,75 +351,104 @@ export type UserScalarWhereWithAggregatesInput = {
 export type UserCreateInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestUncheckedCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUncheckedUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -364,11 +456,16 @@ export type UserCreateManyInput = {
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,11 +473,16 @@ export type UserUpdateManyMutationInput = {
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -393,11 +495,16 @@ export type UserScalarRelationFilter = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -405,11 +512,16 @@ export type UserCountOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -417,13 +529,32 @@ export type UserMaxOrderByAggregateInput = {
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserCreateNestedOneWithoutLandlordRequestInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLandlordRequestInput, Prisma.UserUncheckedCreateWithoutLandlordRequestInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLandlordRequestInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLandlordRequestNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLandlordRequestInput, Prisma.UserUncheckedCreateWithoutLandlordRequestInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLandlordRequestInput
+  upsert?: Prisma.UserUpsertWithoutLandlordRequestInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLandlordRequestInput, Prisma.UserUpdateWithoutLandlordRequestInput>, Prisma.UserUncheckedUpdateWithoutLandlordRequestInput>
 }
 
 export type UserCreateNestedOneWithoutPaymentsInput = {
@@ -482,6 +613,10 @@ export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>
 }
 
+export type NullableEnumGenderFieldUpdateOperationsInput = {
+  set?: $Enums.Gender | null
+}
+
 export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
 }
@@ -490,34 +625,146 @@ export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
 
-export type UserCreateWithoutPaymentsInput = {
+export type UserCreateWithoutLandlordRequestInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
 }
 
-export type UserUncheckedCreateWithoutPaymentsInput = {
+export type UserUncheckedCreateWithoutLandlordRequestInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestUncheckedCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type UserCreateOrConnectWithoutLandlordRequestInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLandlordRequestInput, Prisma.UserUncheckedCreateWithoutLandlordRequestInput>
+}
+
+export type UserUpsertWithoutLandlordRequestInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLandlordRequestInput, Prisma.UserUncheckedUpdateWithoutLandlordRequestInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLandlordRequestInput, Prisma.UserUncheckedCreateWithoutLandlordRequestInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLandlordRequestInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLandlordRequestInput, Prisma.UserUncheckedUpdateWithoutLandlordRequestInput>
+}
+
+export type UserUpdateWithoutLandlordRequestInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  properties?: Prisma.PropertyUpdateManyWithoutLandlordNestedInput
+  rentalRequests?: Prisma.RentalRequestUpdateManyWithoutTenantNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLandlordRequestInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+  rentalRequests?: Prisma.RentalRequestUncheckedUpdateManyWithoutTenantNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  properties?: Prisma.PropertyCreateNestedManyWithoutLandlordInput
+  rentalRequests?: Prisma.RentalRequestCreateNestedManyWithoutTenantInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutLandlordInput
+  rentalRequests?: Prisma.RentalRequestUncheckedCreateNestedManyWithoutTenantInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -539,61 +786,85 @@ export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
 export type UserUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUncheckedUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPropertiesInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rentalRequests?: Prisma.RentalRequestCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPropertiesInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rentalRequests?: Prisma.RentalRequestUncheckedCreateNestedManyWithoutTenantInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPropertiesInput = {
@@ -615,61 +886,85 @@ export type UserUpdateToOneWithWhereWithoutPropertiesInput = {
 export type UserUpdateWithoutPropertiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rentalRequests?: Prisma.RentalRequestUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPropertiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rentalRequests?: Prisma.RentalRequestUncheckedUpdateManyWithoutTenantNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRentalRequestsInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyCreateNestedManyWithoutLandlordInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRentalRequestsInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutLandlordInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRentalRequestsInput = {
@@ -691,61 +986,85 @@ export type UserUpdateToOneWithWhereWithoutRentalRequestsInput = {
 export type UserUpdateWithoutRentalRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUpdateManyWithoutLandlordNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRentalRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutLandlordNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
   id?: string
   email: string
-  name: string
   password: string
+  name: string
+  phone?: string | null
+  profilePicture?: string | null
+  bio?: string | null
+  gender?: $Enums.Gender | null
+  dateOfBirth?: Date | string | null
+  address?: string | null
   role?: $Enums.Role
   status?: $Enums.UserStatus
-  phone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutLandlordInput
   rentalRequests?: Prisma.RentalRequestUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -767,31 +1086,43 @@ export type UserUpdateToOneWithWhereWithoutReviewsInput = {
 export type UserUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutLandlordNestedInput
   rentalRequests?: Prisma.RentalRequestUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  landlordRequest?: Prisma.LandlordRequestUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -855,28 +1186,39 @@ export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.E
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
   password?: boolean
+  name?: boolean
+  phone?: boolean
+  profilePicture?: boolean
+  bio?: boolean
+  gender?: boolean
+  dateOfBirth?: boolean
+  address?: boolean
   role?: boolean
   status?: boolean
-  phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   properties?: boolean | Prisma.User$propertiesArgs<ExtArgs>
   rentalRequests?: boolean | Prisma.User$rentalRequestsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  landlordRequest?: boolean | Prisma.User$landlordRequestArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
   password?: boolean
+  name?: boolean
+  phone?: boolean
+  profilePicture?: boolean
+  bio?: boolean
+  gender?: boolean
+  dateOfBirth?: boolean
+  address?: boolean
   role?: boolean
   status?: boolean
-  phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -884,11 +1226,16 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
-  name?: boolean
   password?: boolean
+  name?: boolean
+  phone?: boolean
+  profilePicture?: boolean
+  bio?: boolean
+  gender?: boolean
+  dateOfBirth?: boolean
+  address?: boolean
   role?: boolean
   status?: boolean
-  phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -896,21 +1243,27 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
-  name?: boolean
   password?: boolean
+  name?: boolean
+  phone?: boolean
+  profilePicture?: boolean
+  bio?: boolean
+  gender?: boolean
+  dateOfBirth?: boolean
+  address?: boolean
   role?: boolean
   status?: boolean
-  phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "status" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "phone" | "profilePicture" | "bio" | "gender" | "dateOfBirth" | "address" | "role" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   properties?: boolean | Prisma.User$propertiesArgs<ExtArgs>
   rentalRequests?: boolean | Prisma.User$rentalRequestsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  landlordRequest?: boolean | Prisma.User$landlordRequestArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -923,15 +1276,21 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     rentalRequests: Prisma.$RentalRequestPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    landlordRequest: Prisma.$LandlordRequestPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
-    name: string
     password: string
+    name: string
+    phone: string | null
+    profilePicture: string | null
+    bio: string | null
+    gender: $Enums.Gender | null
+    dateOfBirth: Date | null
+    address: string | null
     role: $Enums.Role
     status: $Enums.UserStatus
-    phone: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1332,6 +1691,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   rentalRequests<T extends Prisma.User$rentalRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rentalRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  landlordRequest<T extends Prisma.User$landlordRequestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$landlordRequestArgs<ExtArgs>>): Prisma.Prisma__LandlordRequestClient<runtime.Types.Result.GetResult<Prisma.$LandlordRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1363,11 +1723,16 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly profilePicture: Prisma.FieldRef<"User", 'String'>
+  readonly bio: Prisma.FieldRef<"User", 'String'>
+  readonly gender: Prisma.FieldRef<"User", 'Gender'>
+  readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
+  readonly address: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
-  readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1856,6 +2221,25 @@ export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.landlordRequest
+ */
+export type User$landlordRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LandlordRequest
+   */
+  select?: Prisma.LandlordRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LandlordRequest
+   */
+  omit?: Prisma.LandlordRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LandlordRequestInclude<ExtArgs> | null
+  where?: Prisma.LandlordRequestWhereInput
 }
 
 /**

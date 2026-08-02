@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type Category = Prisma.CategoryModel
 /**
+ * Model LandlordRequest
+ * 
+ */
+export type LandlordRequest = Prisma.LandlordRequestModel
+/**
  * Model Payment
  * 
  */
