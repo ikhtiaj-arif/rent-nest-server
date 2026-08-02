@@ -1,10 +1,10 @@
 // Rentals Controller placeholder
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
- 
-import { rentalService } from "./rentals.service";
+
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import { rentalService } from "./rentals.service";
 
 const createRental = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -90,9 +90,9 @@ const approveRentalRequest = catchAsync(
 );
 
 const getRentalsOnPropertyForLandlord = catchAsync(async (req, res) => {
-  const landlordId = req.user?.id;
+  const landlordId = req?.user?.id;
   const { status } = req.query;
-
+ 
   const result = await rentalService.getRentalsOnPropertyForLandlord(
     landlordId!,
     req.query,

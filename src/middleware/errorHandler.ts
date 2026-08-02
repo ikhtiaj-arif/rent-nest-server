@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import { ZodError } from "zod";
 import { Prisma } from "../../generated/prisma/client";
 
 export const globalErrorHandler = (
@@ -20,7 +21,26 @@ export const globalErrorHandler = (
 
   console.error(err);
 
-  if (err instanceof Prisma.PrismaClientValidationError) {
+  if (err instanceof ZodError) {
+    // Reshape Zod's issue list into { fieldName: ["message", ...] },
+    // matching the error response format documented in the README.
+    statusCode = httpStatus.BAD_REQUEST;
+    errorName = "ValidationError";
+    // The frontend currently only surfaces the top-level `message` in its
+    // toasts (it doesn't yet read `errorDetails` for inline field errors),
+    // so lead with the first field's actual message rather than a generic
+    // "Validation failed" — that's the difference between a useful toast
+    // and a useless one until inline field errors are wired up client-side.
+    errorMessage = err.issues[0]?.message ?? "Validation failed";
+    errorDetails = err.issues.reduce<Record<string, string[]>>(
+      (acc, issue) => {
+        const field = issue.path.join(".") || "root";
+        acc[field] = [...(acc[field] ?? []), issue.message];
+        return acc;
+      },
+      {},
+    );
+  } else if (err instanceof Prisma.PrismaClientValidationError) {
     statusCode = httpStatus.BAD_REQUEST;
     errorName = "PrismaValidationError";
     errorMessage =

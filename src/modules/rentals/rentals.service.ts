@@ -53,6 +53,7 @@ const getRentalsOnPropertyForLandlord = async (
   landlordId: string,
   query: ILandlordRentalQuery,
 ) => {
+ 
   const limit = query.limit ? Number(query.limit) : 10;
   const page = query.page ? Number(query.page) : 1;
   const skip = (page - 1) * limit;

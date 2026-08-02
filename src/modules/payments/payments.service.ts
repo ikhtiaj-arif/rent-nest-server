@@ -261,6 +261,51 @@ const getUserPayments = async (
   };
 };
 
+// The Stripe success_url redirect only gives the frontend a session_id
+// (CHECKOUT_SESSION_ID), never our internal payment.id. This lookup lets
+// the /payment-success page poll for status using what it actually has.
+// We store Stripe's session.id in the stripePaymentIntentId column
+// (see createPayment above), so that's what we look up by here.
+const getPaymentBySession = async (
+  sessionId: string,
+  tenantId: string,
+  role: string,
+) => {
+  const payment = await prisma.payment.findUnique({
+    where: { stripePaymentIntentId: sessionId },
+    include: {
+      rentalRequest: {
+        include: {
+          property: {
+            select: {
+              id: true,
+              title: true,
+              city: true,
+              price: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!payment) {
+    // Can legitimately happen for a second or two right after redirect,
+    // if our own createPayment DB write hasn't landed before the
+    // frontend's first poll — the caller should treat this as "still
+    // pending" and keep polling, not as a hard error.
+    return null;
+  }
+
+  if (role !== "ADMIN" && payment.tenantId !== tenantId) {
+    throw new Error(
+      "Forbidden. You do not have permission to view this payment",
+    );
+  }
+
+  return payment;
+};
+
 const getPaymentById = async (
   paymentId: string,
   tenantId: string,
@@ -310,4 +355,5 @@ export const paymentService = {
   handleStripeWebhook,
   getUserPayments,
   getPaymentById,
+  getPaymentBySession,
 };

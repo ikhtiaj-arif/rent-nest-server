@@ -21,7 +21,11 @@ router.get(
   auth(Role.LANDLORD, Role.ADMIN),
   propertiesController.getOwnProperties,
 );
-router.get("/requests", rentalController.getRentalsOnPropertyForLandlord);
+router.get(
+  "/requests",
+  auth(Role.LANDLORD, Role.ADMIN),
+  rentalController.getRentalsOnPropertyForLandlord,
+);
 router.patch(
   "/requests/:id",
   auth(Role.LANDLORD),

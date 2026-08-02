@@ -4,11 +4,18 @@ import { JwtPayload, SignOptions } from "jsonwebtoken";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import { jwtUtils } from "../../utils/jwt";
+import { Role } from "../../../generated/prisma/enums";
 import { ILoginUser, IRegisterUserPayload } from "./auth.interface";
+
+// Roles the public /register endpoint is allowed to create.
+// ADMIN is intentionally excluded — admin accounts are seeded only,
+// never self-registered, to avoid an unauthenticated user granting
+// themselves platform-wide access.
+const SELF_REGISTERABLE_ROLES: Role[] = [Role.TENANT, Role.LANDLORD];
 
 // Auth Service placeholder
 const registerDB = async (payload: IRegisterUserPayload) => {
-  const { email, password, name, phone } = payload;
+  const { email, password, name, phone, role } = payload;
 
   const userExists = await prisma.user.findUnique({
     where: {
@@ -18,6 +25,15 @@ const registerDB = async (payload: IRegisterUserPayload) => {
   if (userExists) {
     throw new Error("User with this email already exists ");
   }
+
+  // Default to TENANT if no role is provided; reject anything that
+  // isn't an allowed self-registerable role (blocks ADMIN and any
+  // unrecognized value from being passed straight through).
+  const resolvedRole = role ?? Role.TENANT;
+  if (!SELF_REGISTERABLE_ROLES.includes(resolvedRole)) {
+    throw new Error("Invalid role. Must be TENANT or LANDLORD");
+  }
+
   const hashedPassword = await bcrypt.hash(
     password,
     Number(config.bcrypt_salt_rounds),
@@ -29,6 +45,7 @@ const registerDB = async (payload: IRegisterUserPayload) => {
       email,
       password: hashedPassword,
       phone,
+      role: resolvedRole,
     },
   });
 
