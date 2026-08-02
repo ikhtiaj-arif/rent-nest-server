@@ -11,6 +11,7 @@ model Property {
   isAvailable   Boolean   @default(true)
   availableFrom DateTime?
   furnished     Boolean   @default(false)
+  onRent        Boolean   @default(false)
 
   landlordId String
   landlord   User   @relation(fields: [landlordId], references: [id])

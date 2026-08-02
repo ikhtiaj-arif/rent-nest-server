@@ -24,7 +24,7 @@ const createProperty = async (
     availableFrom,
     furnished,
   } = payload;
-  const isFurnished = furnished === "true";
+  // const isFurnished = furnished === "true";
 
   const landlordId = userId;
 
@@ -57,7 +57,7 @@ const createProperty = async (
         address,
         description,
         availableFrom,
-        furnished: isFurnished,
+        furnished,
         landlordId,
         categoryId: category.id,
       },
@@ -287,6 +287,7 @@ const updateProperty = async (
   propertyId: string,
   payload: Partial<IPropertyPayload>,
 ) => {
+  console.log("payload", payload);
   const property = await prisma.property.findUnique({
     where: {
       id: propertyId,
@@ -336,8 +337,16 @@ const updateProperty = async (
       },
       data: {
         title: payload.title,
+        description: payload.description,
         city: payload.city,
+        address: payload.address,
         price: payload.price,
+        bedrooms: payload.bedrooms,
+        bathrooms: payload.bathrooms,
+        area: payload.area,
+        availableFrom: payload.availableFrom,
+        furnished: payload.furnished,
+        isAvailable: payload.isAvailable,
         categoryId,
       },
       include: {
@@ -538,6 +547,7 @@ const getOwnProperties = async (query: IPropertyQuery, ownerId: string) => {
             displayOrder: "asc",
           },
         },
+
         _count: {
           select: {
             rentalRequests: true,

@@ -1,14 +1,15 @@
 export interface IPropertyPayload {
   title: string;
+  description: string;
   city: string;
+  address: string;
   price: number;
-  area: number;
   bedrooms: number;
   bathrooms: number;
-  address: string;
-  description: string;
-  availableFrom: string;
-  furnished: string;
+  area: number;
+  availableFrom: Date | string;
+  furnished: boolean;
+  isAvailable: boolean; // <-- add this
   categoryName: string;
   categoryDescription: string;
 }

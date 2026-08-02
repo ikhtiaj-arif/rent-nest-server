@@ -116,6 +116,7 @@ export const PropertyScalarFieldEnum = {
   isAvailable: 'isAvailable',
   availableFrom: 'availableFrom',
   furnished: 'furnished',
+  onRent: 'onRent',
   landlordId: 'landlordId',
   categoryId: 'categoryId',
   averageRating: 'averageRating',

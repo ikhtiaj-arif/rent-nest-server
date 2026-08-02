@@ -57,6 +57,7 @@ export type PropertyMinAggregateOutputType = {
   isAvailable: boolean | null
   availableFrom: Date | null
   furnished: boolean | null
+  onRent: boolean | null
   landlordId: string | null
   categoryId: string | null
   averageRating: number | null
@@ -78,6 +79,7 @@ export type PropertyMaxAggregateOutputType = {
   isAvailable: boolean | null
   availableFrom: Date | null
   furnished: boolean | null
+  onRent: boolean | null
   landlordId: string | null
   categoryId: string | null
   averageRating: number | null
@@ -99,6 +101,7 @@ export type PropertyCountAggregateOutputType = {
   isAvailable: number
   availableFrom: number
   furnished: number
+  onRent: number
   landlordId: number
   categoryId: number
   averageRating: number
@@ -140,6 +143,7 @@ export type PropertyMinAggregateInputType = {
   isAvailable?: true
   availableFrom?: true
   furnished?: true
+  onRent?: true
   landlordId?: true
   categoryId?: true
   averageRating?: true
@@ -161,6 +165,7 @@ export type PropertyMaxAggregateInputType = {
   isAvailable?: true
   availableFrom?: true
   furnished?: true
+  onRent?: true
   landlordId?: true
   categoryId?: true
   averageRating?: true
@@ -182,6 +187,7 @@ export type PropertyCountAggregateInputType = {
   isAvailable?: true
   availableFrom?: true
   furnished?: true
+  onRent?: true
   landlordId?: true
   categoryId?: true
   averageRating?: true
@@ -290,6 +296,7 @@ export type PropertyGroupByOutputType = {
   isAvailable: boolean
   availableFrom: Date | null
   furnished: boolean
+  onRent: boolean
   landlordId: string
   categoryId: string
   averageRating: number
@@ -334,6 +341,7 @@ export type PropertyWhereInput = {
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
+  onRent?: Prisma.BoolFilter<"Property"> | boolean
   landlordId?: Prisma.StringFilter<"Property"> | string
   categoryId?: Prisma.StringFilter<"Property"> | string
   averageRating?: Prisma.FloatFilter<"Property"> | number
@@ -360,6 +368,7 @@ export type PropertyOrderByWithRelationInput = {
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrderInput | Prisma.SortOrder
   furnished?: Prisma.SortOrder
+  onRent?: Prisma.SortOrder
   landlordId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   averageRating?: Prisma.SortOrder
@@ -389,6 +398,7 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
+  onRent?: Prisma.BoolFilter<"Property"> | boolean
   landlordId?: Prisma.StringFilter<"Property"> | string
   categoryId?: Prisma.StringFilter<"Property"> | string
   averageRating?: Prisma.FloatFilter<"Property"> | number
@@ -415,6 +425,7 @@ export type PropertyOrderByWithAggregationInput = {
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrderInput | Prisma.SortOrder
   furnished?: Prisma.SortOrder
+  onRent?: Prisma.SortOrder
   landlordId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   averageRating?: Prisma.SortOrder
@@ -444,6 +455,7 @@ export type PropertyScalarWhereWithAggregatesInput = {
   isAvailable?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  onRent?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
   landlordId?: Prisma.StringWithAggregatesFilter<"Property"> | string
   categoryId?: Prisma.StringWithAggregatesFilter<"Property"> | string
   averageRating?: Prisma.FloatWithAggregatesFilter<"Property"> | number
@@ -465,6 +477,7 @@ export type PropertyCreateInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -489,6 +502,7 @@ export type PropertyUncheckedCreateInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   categoryId: string
   averageRating?: number
@@ -513,6 +527,7 @@ export type PropertyUpdateInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -537,6 +552,7 @@ export type PropertyUncheckedUpdateInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -561,6 +577,7 @@ export type PropertyCreateManyInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   categoryId: string
   averageRating?: number
@@ -582,6 +599,7 @@ export type PropertyUpdateManyMutationInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -601,6 +619,7 @@ export type PropertyUncheckedUpdateManyInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -632,6 +651,7 @@ export type PropertyCountOrderByAggregateInput = {
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrder
   furnished?: Prisma.SortOrder
+  onRent?: Prisma.SortOrder
   landlordId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   averageRating?: Prisma.SortOrder
@@ -662,6 +682,7 @@ export type PropertyMaxOrderByAggregateInput = {
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrder
   furnished?: Prisma.SortOrder
+  onRent?: Prisma.SortOrder
   landlordId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   averageRating?: Prisma.SortOrder
@@ -683,6 +704,7 @@ export type PropertyMinOrderByAggregateInput = {
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrder
   furnished?: Prisma.SortOrder
+  onRent?: Prisma.SortOrder
   landlordId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   averageRating?: Prisma.SortOrder
@@ -880,6 +902,7 @@ export type PropertyCreateWithoutCategoryInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -903,6 +926,7 @@ export type PropertyUncheckedCreateWithoutCategoryInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   averageRating?: number
   totalReviews?: number
@@ -955,6 +979,7 @@ export type PropertyScalarWhereInput = {
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
+  onRent?: Prisma.BoolFilter<"Property"> | boolean
   landlordId?: Prisma.StringFilter<"Property"> | string
   categoryId?: Prisma.StringFilter<"Property"> | string
   averageRating?: Prisma.FloatFilter<"Property"> | number
@@ -976,6 +1001,7 @@ export type PropertyCreateWithoutImagesInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -999,6 +1025,7 @@ export type PropertyUncheckedCreateWithoutImagesInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   categoryId: string
   averageRating?: number
@@ -1038,6 +1065,7 @@ export type PropertyUpdateWithoutImagesInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1061,6 +1089,7 @@ export type PropertyUncheckedUpdateWithoutImagesInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1084,6 +1113,7 @@ export type PropertyCreateWithoutRentalRequestsInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -1107,6 +1137,7 @@ export type PropertyUncheckedCreateWithoutRentalRequestsInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   categoryId: string
   averageRating?: number
@@ -1146,6 +1177,7 @@ export type PropertyUpdateWithoutRentalRequestsInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1169,6 +1201,7 @@ export type PropertyUncheckedUpdateWithoutRentalRequestsInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1192,6 +1225,7 @@ export type PropertyCreateWithoutReviewsInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -1215,6 +1249,7 @@ export type PropertyUncheckedCreateWithoutReviewsInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   categoryId: string
   averageRating?: number
@@ -1254,6 +1289,7 @@ export type PropertyUpdateWithoutReviewsInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1277,6 +1313,7 @@ export type PropertyUncheckedUpdateWithoutReviewsInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1300,6 +1337,7 @@ export type PropertyCreateWithoutLandlordInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   averageRating?: number
   totalReviews?: number
   createdAt?: Date | string
@@ -1323,6 +1361,7 @@ export type PropertyUncheckedCreateWithoutLandlordInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   categoryId: string
   averageRating?: number
   totalReviews?: number
@@ -1372,6 +1411,7 @@ export type PropertyCreateManyCategoryInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   landlordId: string
   averageRating?: number
   totalReviews?: number
@@ -1392,6 +1432,7 @@ export type PropertyUpdateWithoutCategoryInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1415,6 +1456,7 @@ export type PropertyUncheckedUpdateWithoutCategoryInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1438,6 +1480,7 @@ export type PropertyUncheckedUpdateManyWithoutCategoryInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   landlordId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1458,6 +1501,7 @@ export type PropertyCreateManyLandlordInput = {
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
+  onRent?: boolean
   categoryId: string
   averageRating?: number
   totalReviews?: number
@@ -1478,6 +1522,7 @@ export type PropertyUpdateWithoutLandlordInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1501,6 +1546,7 @@ export type PropertyUncheckedUpdateWithoutLandlordInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1524,6 +1570,7 @@ export type PropertyUncheckedUpdateManyWithoutLandlordInput = {
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onRent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   totalReviews?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1593,6 +1640,7 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   isAvailable?: boolean
   availableFrom?: boolean
   furnished?: boolean
+  onRent?: boolean
   landlordId?: boolean
   categoryId?: boolean
   averageRating?: boolean
@@ -1620,6 +1668,7 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isAvailable?: boolean
   availableFrom?: boolean
   furnished?: boolean
+  onRent?: boolean
   landlordId?: boolean
   categoryId?: boolean
   averageRating?: boolean
@@ -1643,6 +1692,7 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isAvailable?: boolean
   availableFrom?: boolean
   furnished?: boolean
+  onRent?: boolean
   landlordId?: boolean
   categoryId?: boolean
   averageRating?: boolean
@@ -1666,6 +1716,7 @@ export type PropertySelectScalar = {
   isAvailable?: boolean
   availableFrom?: boolean
   furnished?: boolean
+  onRent?: boolean
   landlordId?: boolean
   categoryId?: boolean
   averageRating?: boolean
@@ -1674,7 +1725,7 @@ export type PropertySelectScalar = {
   updatedAt?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "city" | "price" | "area" | "description" | "address" | "bedrooms" | "bathrooms" | "isAvailable" | "availableFrom" | "furnished" | "landlordId" | "categoryId" | "averageRating" | "totalReviews" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "city" | "price" | "area" | "description" | "address" | "bedrooms" | "bathrooms" | "isAvailable" | "availableFrom" | "furnished" | "onRent" | "landlordId" | "categoryId" | "averageRating" | "totalReviews" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   landlord?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -1714,6 +1765,7 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     isAvailable: boolean
     availableFrom: Date | null
     furnished: boolean
+    onRent: boolean
     landlordId: string
     categoryId: string
     averageRating: number
@@ -2160,6 +2212,7 @@ export interface PropertyFieldRefs {
   readonly isAvailable: Prisma.FieldRef<"Property", 'Boolean'>
   readonly availableFrom: Prisma.FieldRef<"Property", 'DateTime'>
   readonly furnished: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly onRent: Prisma.FieldRef<"Property", 'Boolean'>
   readonly landlordId: Prisma.FieldRef<"Property", 'String'>
   readonly categoryId: Prisma.FieldRef<"Property", 'String'>
   readonly averageRating: Prisma.FieldRef<"Property", 'Float'>
