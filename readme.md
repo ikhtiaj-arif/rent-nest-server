@@ -1,4 +1,5 @@
 ERD_URL=https://drawsql.app/teams/ikhtiaj-arif/diagrams/rent-nest
+Live_Url=https://rent-nest-server-gial.onrender.com
 
 # RentNest 🏠
 
