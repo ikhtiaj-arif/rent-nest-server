@@ -14,6 +14,14 @@ router.post("/confirm", paymentController.confirmPayment);
 
 router.get("/", auth(Role.TENANT, Role.ADMIN), paymentController.getPayments);
 
+// Must come before "/:id" — otherwise "/session/xyz" would be matched
+// by "/:id" with id="session" instead of hitting this handler.
+router.get(
+  "/session/:sessionId",
+  auth(Role.TENANT, Role.ADMIN),
+  paymentController.getPaymentBySession,
+);
+
 router.get("/:id", auth(Role.TENANT, Role.ADMIN), paymentController.getPaymentById);
 
 export const paymentRoutes = router;

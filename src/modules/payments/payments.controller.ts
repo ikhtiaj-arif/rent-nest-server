@@ -67,6 +67,32 @@ const getPayments = catchAsync(
   },
 );
 
+const getPaymentBySession = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { sessionId } = req.params;
+    const tenantId = req.user!.id;
+    const role = req.user!.role;
+
+    const result = await paymentService.getPaymentBySession(
+      sessionId!,
+      tenantId,
+      role,
+    );
+
+    // No throw on "not found" here — the payment success page polls
+    // this repeatedly right after a Stripe redirect, and a brief
+    // "not found yet" is expected, not an error state.
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: result
+        ? "Payment retrieved successfully"
+        : "Payment not found yet",
+      data: result,
+    });
+  },
+);
+
 const getPaymentById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -89,4 +115,5 @@ export const paymentController = {
   confirmPayment,
   getPayments,
   getPaymentById,
+  getPaymentBySession,
 };

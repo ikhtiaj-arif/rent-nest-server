@@ -134,6 +134,8 @@ const getRentalsById = async (rentalId: string) => {
       property: {
         include: {
           category: true,
+          landlord: true,
+          images: true,
         },
       },
       payment: {

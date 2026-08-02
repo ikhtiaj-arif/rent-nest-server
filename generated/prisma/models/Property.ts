@@ -283,10 +283,10 @@ export type PropertyGroupByOutputType = {
   city: string
   price: number
   area: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description: string | null
+  address: string | null
+  bedrooms: number | null
+  bathrooms: number | null
   isAvailable: boolean
   availableFrom: Date | null
   furnished: boolean
@@ -327,10 +327,10 @@ export type PropertyWhereInput = {
   city?: Prisma.StringFilter<"Property"> | string
   price?: Prisma.FloatFilter<"Property"> | number
   area?: Prisma.FloatNullableFilter<"Property"> | number | null
-  description?: Prisma.StringFilter<"Property"> | string
-  address?: Prisma.StringFilter<"Property"> | string
-  bedrooms?: Prisma.IntFilter<"Property"> | number
-  bathrooms?: Prisma.IntFilter<"Property"> | number
+  description?: Prisma.StringNullableFilter<"Property"> | string | null
+  address?: Prisma.StringNullableFilter<"Property"> | string | null
+  bedrooms?: Prisma.IntNullableFilter<"Property"> | number | null
+  bathrooms?: Prisma.IntNullableFilter<"Property"> | number | null
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
@@ -353,10 +353,10 @@ export type PropertyOrderByWithRelationInput = {
   city?: Prisma.SortOrder
   price?: Prisma.SortOrder
   area?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  bedrooms?: Prisma.SortOrder
-  bathrooms?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  bedrooms?: Prisma.SortOrderInput | Prisma.SortOrder
+  bathrooms?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrderInput | Prisma.SortOrder
   furnished?: Prisma.SortOrder
@@ -382,10 +382,10 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   city?: Prisma.StringFilter<"Property"> | string
   price?: Prisma.FloatFilter<"Property"> | number
   area?: Prisma.FloatNullableFilter<"Property"> | number | null
-  description?: Prisma.StringFilter<"Property"> | string
-  address?: Prisma.StringFilter<"Property"> | string
-  bedrooms?: Prisma.IntFilter<"Property"> | number
-  bathrooms?: Prisma.IntFilter<"Property"> | number
+  description?: Prisma.StringNullableFilter<"Property"> | string | null
+  address?: Prisma.StringNullableFilter<"Property"> | string | null
+  bedrooms?: Prisma.IntNullableFilter<"Property"> | number | null
+  bathrooms?: Prisma.IntNullableFilter<"Property"> | number | null
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
@@ -408,10 +408,10 @@ export type PropertyOrderByWithAggregationInput = {
   city?: Prisma.SortOrder
   price?: Prisma.SortOrder
   area?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  bedrooms?: Prisma.SortOrder
-  bathrooms?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  bedrooms?: Prisma.SortOrderInput | Prisma.SortOrder
+  bathrooms?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   availableFrom?: Prisma.SortOrderInput | Prisma.SortOrder
   furnished?: Prisma.SortOrder
@@ -437,10 +437,10 @@ export type PropertyScalarWhereWithAggregatesInput = {
   city?: Prisma.StringWithAggregatesFilter<"Property"> | string
   price?: Prisma.FloatWithAggregatesFilter<"Property"> | number
   area?: Prisma.FloatNullableWithAggregatesFilter<"Property"> | number | null
-  description?: Prisma.StringWithAggregatesFilter<"Property"> | string
-  address?: Prisma.StringWithAggregatesFilter<"Property"> | string
-  bedrooms?: Prisma.IntWithAggregatesFilter<"Property"> | number
-  bathrooms?: Prisma.IntWithAggregatesFilter<"Property"> | number
+  description?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
+  bedrooms?: Prisma.IntNullableWithAggregatesFilter<"Property"> | number | null
+  bathrooms?: Prisma.IntNullableWithAggregatesFilter<"Property"> | number | null
   isAvailable?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
@@ -458,10 +458,10 @@ export type PropertyCreateInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -482,10 +482,10 @@ export type PropertyUncheckedCreateInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -506,10 +506,10 @@ export type PropertyUpdateInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -530,10 +530,10 @@ export type PropertyUncheckedUpdateInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -554,10 +554,10 @@ export type PropertyCreateManyInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -575,10 +575,10 @@ export type PropertyUpdateManyMutationInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -594,10 +594,10 @@ export type PropertyUncheckedUpdateManyInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -755,8 +755,12 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
@@ -769,6 +773,14 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type PropertyCreateNestedOneWithoutImagesInput = {
@@ -861,10 +873,10 @@ export type PropertyCreateWithoutCategoryInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -884,10 +896,10 @@ export type PropertyUncheckedCreateWithoutCategoryInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -936,10 +948,10 @@ export type PropertyScalarWhereInput = {
   city?: Prisma.StringFilter<"Property"> | string
   price?: Prisma.FloatFilter<"Property"> | number
   area?: Prisma.FloatNullableFilter<"Property"> | number | null
-  description?: Prisma.StringFilter<"Property"> | string
-  address?: Prisma.StringFilter<"Property"> | string
-  bedrooms?: Prisma.IntFilter<"Property"> | number
-  bathrooms?: Prisma.IntFilter<"Property"> | number
+  description?: Prisma.StringNullableFilter<"Property"> | string | null
+  address?: Prisma.StringNullableFilter<"Property"> | string | null
+  bedrooms?: Prisma.IntNullableFilter<"Property"> | number | null
+  bathrooms?: Prisma.IntNullableFilter<"Property"> | number | null
   isAvailable?: Prisma.BoolFilter<"Property"> | boolean
   availableFrom?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   furnished?: Prisma.BoolFilter<"Property"> | boolean
@@ -957,10 +969,10 @@ export type PropertyCreateWithoutImagesInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -980,10 +992,10 @@ export type PropertyUncheckedCreateWithoutImagesInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1019,10 +1031,10 @@ export type PropertyUpdateWithoutImagesInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1042,10 +1054,10 @@ export type PropertyUncheckedUpdateWithoutImagesInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1065,10 +1077,10 @@ export type PropertyCreateWithoutRentalRequestsInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1088,10 +1100,10 @@ export type PropertyUncheckedCreateWithoutRentalRequestsInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1127,10 +1139,10 @@ export type PropertyUpdateWithoutRentalRequestsInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1150,10 +1162,10 @@ export type PropertyUncheckedUpdateWithoutRentalRequestsInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1173,10 +1185,10 @@ export type PropertyCreateWithoutReviewsInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1196,10 +1208,10 @@ export type PropertyUncheckedCreateWithoutReviewsInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1235,10 +1247,10 @@ export type PropertyUpdateWithoutReviewsInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1258,10 +1270,10 @@ export type PropertyUncheckedUpdateWithoutReviewsInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1281,10 +1293,10 @@ export type PropertyCreateWithoutLandlordInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1304,10 +1316,10 @@ export type PropertyUncheckedCreateWithoutLandlordInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1353,10 +1365,10 @@ export type PropertyCreateManyCategoryInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1373,10 +1385,10 @@ export type PropertyUpdateWithoutCategoryInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1396,10 +1408,10 @@ export type PropertyUncheckedUpdateWithoutCategoryInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1419,10 +1431,10 @@ export type PropertyUncheckedUpdateManyWithoutCategoryInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1439,10 +1451,10 @@ export type PropertyCreateManyLandlordInput = {
   city: string
   price: number
   area?: number | null
-  description: string
-  address: string
-  bedrooms: number
-  bathrooms: number
+  description?: string | null
+  address?: string | null
+  bedrooms?: number | null
+  bathrooms?: number | null
   isAvailable?: boolean
   availableFrom?: Date | string | null
   furnished?: boolean
@@ -1459,10 +1471,10 @@ export type PropertyUpdateWithoutLandlordInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1482,10 +1494,10 @@ export type PropertyUncheckedUpdateWithoutLandlordInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1505,10 +1517,10 @@ export type PropertyUncheckedUpdateManyWithoutLandlordInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   area?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  bedrooms?: Prisma.IntFieldUpdateOperationsInput | number
-  bathrooms?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bedrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bathrooms?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   furnished?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1695,10 +1707,10 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     city: string
     price: number
     area: number | null
-    description: string
-    address: string
-    bedrooms: number
-    bathrooms: number
+    description: string | null
+    address: string | null
+    bedrooms: number | null
+    bathrooms: number | null
     isAvailable: boolean
     availableFrom: Date | null
     furnished: boolean

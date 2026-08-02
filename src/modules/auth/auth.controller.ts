@@ -25,18 +25,24 @@ const login = catchAsync(
 
     const { accessToken, refreshToken } = await authService.loginUser(payload);
 
+    // Note: with the current architecture, the browser never calls this
+    // API directly — the Next.js app proxies auth through a Server Action
+    // and sets its own cookies from the JSON response (see authActions.ts
+    // in the client repo). These cookies are mostly useful for testing
+    // this endpoint directly via Postman/Thunder Client. They're fixed
+    // here regardless, because sameSite:"none" without secure:true is
+    // rejected outright by modern browsers — that combination silently
+    // fails to set the cookie at all, which isn't just unused, it's wrong.
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      secure: false,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      secure: false,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     });
 
@@ -56,8 +62,8 @@ const refreshToken = catchAsync(
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24, // 24 hour or 1 day
     });
 

@@ -575,18 +575,6 @@ export type PropertyImageUncheckedUpdateManyWithoutPropertyNestedInput = {
   deleteMany?: Prisma.PropertyImageScalarWhereInput | Prisma.PropertyImageScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type PropertyImageCreateWithoutPropertyInput = {
   id?: string
   url: string

@@ -7,6 +7,7 @@ export interface IRegisterUserPayload {
   email: string;
   password: string;
   phone?: string;
+  role?: Role;
 }
 
 export interface IUser {
