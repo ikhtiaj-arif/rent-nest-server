@@ -1,0 +1,19 @@
+model LandlordRequest {
+  id String @id @default(uuid())
+
+  userId String @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status LandlordRequestStatus @default(PENDING)
+
+  requestReason String? @db.Text
+
+  rejectionReason String? @db.Text
+
+  createdAt  DateTime  @default(now())
+  reviewedAt DateTime?
+  updatedAt  DateTime  @updatedAt
+
+  @@index([status])
+  @@map("landlord_requests")
+}
