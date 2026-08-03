@@ -96,13 +96,36 @@ const createProperty = async (
   return result;
 };
 
+// Maps the combined `sort` query param the client sends (e.g. "price_asc")
+// to a concrete { sortBy, sortOrder } pair. Falls back to explicit
+// sortBy/sortOrder query params, then to createdAt desc.
+const SORT_MAP: Record<string, { sortBy: string; sortOrder: "asc" | "desc" }> = {
+  newest: { sortBy: "createdAt", sortOrder: "desc" },
+  oldest: { sortBy: "createdAt", sortOrder: "asc" },
+  price_asc: { sortBy: "price", sortOrder: "asc" },
+  price_desc: { sortBy: "price", sortOrder: "desc" },
+  rating_desc: { sortBy: "createdAt", sortOrder: "desc" },
+};
+
+const resolveSort = (query: IPropertyQuery) => {
+  const mapped = query.sort ? SORT_MAP[query.sort] : undefined;
+
+  if (mapped) {
+    return mapped;
+  }
+
+  return {
+    sortBy: query.sortBy || "createdAt",
+    sortOrder: (query.sortOrder as "asc" | "desc") || "desc",
+  };
+};
+
 const getAllProperties = async (query: IPropertyQuery) => {
   const limit = query.limit ? Number(query.limit) : 10;
   const page = query.page ? Number(query.page) : 1;
   const skip = (page - 1) * limit;
 
-  const sortBy = query.sortBy || "createdAt";
-  const sortOrder = query.sortOrder || "desc";
+  const { sortBy, sortOrder } = resolveSort(query);
 
   const andConditions: PropertyWhereInput[] = [];
 
@@ -172,7 +195,14 @@ const getAllProperties = async (query: IPropertyQuery) => {
     });
   }
 
-  // Category
+  // Category (by id — this is what the properties filter UI sends)
+  if (query.categoryId) {
+    andConditions.push({
+      categoryId: query.categoryId,
+    });
+  }
+
+  // Category (legacy filter by name, kept for backwards compatibility)
   if (query.type) {
     andConditions.push({
       category: {
@@ -427,8 +457,7 @@ const getOwnProperties = async (query: IPropertyQuery, ownerId: string) => {
   const page = query.page ? Number(query.page) : 1;
   const skip = (page - 1) * limit;
 
-  const sortBy = query.sortBy || "createdAt";
-  const sortOrder = query.sortOrder || "desc";
+  const { sortBy, sortOrder } = resolveSort(query);
 
   const andConditions: PropertyWhereInput[] = [
     {
@@ -502,7 +531,14 @@ const getOwnProperties = async (query: IPropertyQuery, ownerId: string) => {
     });
   }
 
-  // Category
+  // Category (by id — this is what the properties filter UI sends)
+  if (query.categoryId) {
+    andConditions.push({
+      categoryId: query.categoryId,
+    });
+  }
+
+  // Category (legacy filter by name, kept for backwards compatibility)
   if (query.type) {
     andConditions.push({
       category: {
