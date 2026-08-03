@@ -32,14 +32,11 @@ export const globalErrorHandler = (
     // "Validation failed" — that's the difference between a useful toast
     // and a useless one until inline field errors are wired up client-side.
     errorMessage = err.issues[0]?.message ?? "Validation failed";
-    errorDetails = err.issues.reduce<Record<string, string[]>>(
-      (acc, issue) => {
-        const field = issue.path.join(".") || "root";
-        acc[field] = [...(acc[field] ?? []), issue.message];
-        return acc;
-      },
-      {},
-    );
+    errorDetails = err.issues.reduce<Record<string, string[]>>((acc, issue) => {
+      const field = issue.path.join(".") || "root";
+      acc[field] = [...(acc[field] ?? []), issue.message];
+      return acc;
+    }, {});
   } else if (err instanceof Prisma.PrismaClientValidationError) {
     statusCode = httpStatus.BAD_REQUEST;
     errorName = "PrismaValidationError";

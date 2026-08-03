@@ -8,7 +8,7 @@ export interface IPropertyPayload {
   bathrooms: number;
   area: number;
   availableFrom: Date | string;
-  furnished: boolean;
+  furnished: string;
   isAvailable: boolean; // <-- add this
   categoryName: string;
   categoryDescription: string;
