@@ -39,8 +39,13 @@ router.post(
 
 router.get(
   "/request-landlord",
-  auth(Role.TENANT),
+  auth(Role.ADMIN),
   userController.getLandlordRequest,
+);
+router.patch(
+  "/request-landlord/:id",
+  auth(Role.ADMIN),
+  userController.updateLandlordRequest,
 );
 
 export const userRoutes = router;

@@ -69,7 +69,7 @@ const getLandlordRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.user!;
 
-    const result = await userService.getLandlordRequest(id);
+    const result = await userService.getLandlordRequest();
 
     sendResponse(res, {
       success: true,
@@ -82,9 +82,9 @@ const getLandlordRequest = catchAsync(
 const changeProfilePicture = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.user!;
-      const files = (req.files as Express.Multer.File[]) ?? [];
+    const files = (req.files as Express.Multer.File[]) ?? [];
 
-    const result = await userService.updateProfilePicture(id,files);
+    const result = await userService.updateProfilePicture(id, files);
 
     sendResponse(res, {
       success: true,
@@ -94,11 +94,28 @@ const changeProfilePicture = catchAsync(
     });
   },
 );
- 
+const updateLandlordRequest = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const payload = req.body;
+
+    const result = await userService.updateLandlordRequest(id!, payload);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Landlord request updated successfully",
+      data: result,
+    });
+  },
+);
+
 export const userController = {
   getMe,
   updateMe,
   changePassword,
   requestLandlord,
-  getLandlordRequest,changeProfilePicture
+  getLandlordRequest,
+  changeProfilePicture,
+  updateLandlordRequest
 };
