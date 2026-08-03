@@ -221,6 +221,14 @@ Full endpoint documentation, including request/response examples and required ro
 | Method | Endpoint                       | Access           |
 | ------ | ------------------------------ | ---------------- |
 | GET    | `/api/properties`              | Public           |
+
+`GET /api/properties` accepts: `page`, `limit`, `searchTerm`, `city`,
+`categoryId` (filter by category id), `minPrice`, `maxPrice`, `isAvailable`,
+`landlordId`, and `sort` (`newest` \| `oldest` \| `price_asc` \| `price_desc` \|
+`rating_desc`; `rating_desc` currently falls back to `createdAt desc` since
+there's no stored/aggregated rating column to sort on yet). `sortBy` /
+`sortOrder` are also accepted directly as a lower-level alternative to `sort`.
+
 | GET    | `/api/properties/:id`          | Public           |
 | GET    | `/api/categories`              | Public           |
 | POST   | `/api/landlord/properties`     | Landlord         |
@@ -293,3 +301,22 @@ The demo video (linked above) covers:
 ## 📄 License
 
 This project was built as part of a backend development assignment and is intended for evaluation purposes.
+
+---
+
+## 📝 Phase 1 Audit Changelog
+
+- **Sort/category filters silently ignored**: `getAllProperties` and
+  `getOwnProperties` in `properties.service.ts` only read `sortBy` /
+  `sortOrder` / `type` (category *name*). The frontend's properties filter
+  UI sends `sort` (e.g. `price_asc`) and `categoryId`, so those filters had
+  no effect at all. Both service functions now resolve `sort` into
+  `{sortBy, sortOrder}` and filter directly by `categoryId`, while keeping
+  `sortBy`/`sortOrder`/`type` working for backwards compatibility.
+- **Known issue (not yet fixed)**: the categories module's actual router is
+  defined inside `categories.service.ts` (exported as `categoryRoutes`) and
+  imported directly from there in `app.ts`, while `categories.routes.ts`,
+  `categories.controller.ts`, and `categories.validation.ts` are unused
+  placeholder files. It works today, but it's inconsistent with every other
+  module's controller/service/routes split and should be refactored so
+  `categories.routes.ts` actually owns the router.
