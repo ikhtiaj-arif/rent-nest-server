@@ -83,6 +83,15 @@ const getAllUsers = async (query: IUserQuery) => {
         status: true,
         createdAt: true,
         updatedAt: true,
+        landlordRequest: {
+          select: {
+            id: true,
+            requestReason: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
       },
     }),
 

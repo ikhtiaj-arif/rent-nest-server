@@ -95,8 +95,6 @@ const requestLandlord = async (
     requestReason: string;
   },
 ) => {
-
- 
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -126,14 +124,75 @@ const requestLandlord = async (
   });
 };
 
-const getLandlordRequest = async (userId: string) => {
-  const request = await prisma.landlordRequest.findUnique({
-    where: {
-      userId,
+const getLandlordRequest = async () => {
+  const request = await prisma.landlordRequest.findMany({
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+        },
+      },
     },
   });
 
   return request;
+};
+const updateLandlordRequest = async (
+  requestId: string,
+  payload: {
+    status: "APPROVED" | "REJECTED";
+    rejectionReason?: string;
+  },
+) => {
+  const request = await prisma.landlordRequest.findUnique({
+    where: {
+      id: requestId,
+    },
+  });
+
+  if (!request) {
+    throw new Error("Landlord request not found");
+  }
+
+  const updatedRequest = await prisma.landlordRequest.update({
+    where: {
+      id: requestId,
+    },
+    data: {
+      status: payload.status,
+      rejectionReason:
+        payload.status === "REJECTED" ? payload.rejectionReason : null,
+      reviewedAt: new Date(),
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+        },
+      },
+    },
+  });
+
+  if (payload.status === "APPROVED") {
+    await prisma.user.update({
+      where: {
+        id: updatedRequest.userId,
+      },
+      data: {
+        role: "LANDLORD",
+      },
+    });
+  }
+
+  return updatedRequest;
 };
 
 const updateProfilePicture = async (
@@ -181,4 +240,5 @@ export const userService = {
   requestLandlord,
   getLandlordRequest,
   updateProfilePicture,
+  updateLandlordRequest,
 };
