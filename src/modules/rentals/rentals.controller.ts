@@ -106,6 +106,48 @@ const getRentalsOnPropertyForLandlord = catchAsync(async (req, res) => {
   });
 });
 
+
+
+const cancelRentalRequest = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const rentalRequestId = req.params.id;
+    const tenantId = req.user?.id;
+
+    const result = await rentalService.cancelRentalRequest(
+      rentalRequestId!,
+      tenantId!,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Rental request cancelled successfully",
+      data: result,
+    });
+  },
+);
+
+const endRental = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const rentalRequestId = req.params.id;
+    const userId = req.user?.id;
+    const role = req.user?.role;
+
+    const result = await rentalService.endRental(
+      rentalRequestId!,
+      userId!,
+      role!,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Rental ended successfully",
+      data: result,
+    });
+  },
+);
+
 export const rentalController = {
   createRental,
   getAllRentals,
@@ -113,5 +155,5 @@ export const rentalController = {
   getUserRentalRequests,
   approveRentalRequest,
   getAllRentalRequests,
-  getRentalsOnPropertyForLandlord,
+  getRentalsOnPropertyForLandlord,endRental, cancelRentalRequest
 };

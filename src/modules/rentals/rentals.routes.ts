@@ -20,4 +20,18 @@ router.get(
   rentalController.getRentalById,
 );
 
+// Tenant cancels pending rental request
+router.patch(
+  "/:id/cancel",
+  auth(Role.TENANT),
+  rentalController.cancelRentalRequest,
+);
+
+// Tenant or Landlord ends an active rental
+router.patch(
+  "/:id/end",
+  auth(Role.TENANT, Role.LANDLORD),
+  rentalController.endRental,
+);
+
 export const rentalRoutes = router;

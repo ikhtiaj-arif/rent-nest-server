@@ -436,6 +436,164 @@ const getAllRentals = async (query: IRentalQuery) => {
     data: rentals,
   };
 };
+const cancelRentalRequest = async (
+  rentalRequestId: string,
+  tenantId: string,
+) => {
+  console.log("========== CANCEL RENTAL REQUEST ==========");
+  console.log("Rental Request ID:", rentalRequestId);
+  console.log("Tenant ID:", tenantId);
+
+  const rental = await prisma.rentalRequest.findUnique({
+    where: {
+      id: rentalRequestId,
+    },
+    include: {
+      property: {
+        select: {
+          id: true,
+          title: true,
+          landlordId: true,
+        },
+      },
+    },
+  });
+
+  console.log("Rental Found:", rental);
+
+  if (!rental) {
+    throw new Error("Rental request not found");
+  }
+
+  if (rental.tenantId !== tenantId) {
+    console.log("Authorization failed");
+    throw new Error("You are not authorized to cancel this request");
+  }
+
+  if (rental.status !== RentalStatus.PENDING) {
+    console.log(`Cannot cancel. Current status: ${rental.status}`);
+
+    throw new Error("Only pending requests can be cancelled");
+  }
+
+  console.log("Updating rental status to CANCELLED...");
+
+  const updatedRental = await prisma.rentalRequest.update({
+    where: {
+      id: rentalRequestId,
+    },
+    data: {
+      status: RentalStatus.CANCELLED,
+    },
+    include: {
+      property: true,
+      tenant: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
+    },
+  });
+
+  console.log("Rental cancelled successfully:", updatedRental.id);
+
+  return updatedRental;
+};
+
+const endRental = async (
+  rentalRequestId: string,
+  userId: string,
+  role: string,
+) => {
+  // console.log("Rental ID:", rentalRequestId);
+  // console.log("User ID:", userId);
+  // console.log("Role:", role);
+
+  const rental = await prisma.rentalRequest.findUnique({
+    where: {
+      id: rentalRequestId,
+    },
+    include: {
+      property: true,
+    },
+  });
+
+  // console.log("Rental found:", rental);
+
+  if (!rental) {
+    // console.log("  Rental not found");
+    throw new Error("Rental not found");
+  }
+
+  // console.log("Rental status:", rental.status);
+
+  if (rental.status !== RentalStatus.ACTIVE) {
+    // console.log("  Rental is not ACTIVE");
+    throw new Error("Only active rentals can be ended");
+  }
+
+  // console.log("Tenant ID:", rental.tenantId);
+  // console.log("Property Landlord ID:", rental.property.landlordId);
+
+  if (role === "TENANT" && rental.tenantId !== userId) {
+    // console.log("  Tenant authorization failed");
+    throw new Error("You are not authorized to end this rental");
+  }
+
+  if (role === "LANDLORD" && rental.property.landlordId !== userId) {
+    // console.log("  Landlord authorization failed");
+    throw new Error("You are not authorized to end this rental");
+  }
+
+  return prisma.$transaction(async (tx) => {
+    const updatedRental = await tx.rentalRequest.update({
+      where: {
+        id: rentalRequestId,
+      },
+      data: {
+        status: RentalStatus.COMPLETED,
+      },
+      include: {
+        tenant: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        property: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+
+    // console.log(" Rental updated:", updatedRental.status);
+
+    const updatedProperty = await tx.property.update({
+      where: {
+        id: rental.propertyId,
+      },
+      data: {
+        isAvailable: true,
+        onRent: false,
+      },
+    });
+
+    // console.log(" Property updated:", {
+    //   id: updatedProperty.id,
+    //   isAvailable: updatedProperty.isAvailable,
+    //   onRent: updatedProperty.onRent,
+    // });
+
+    return updatedRental;
+  });
+};
 
 export const rentalService = {
   createRentals,
@@ -444,4 +602,6 @@ export const rentalService = {
   getUserRentalRequestsDB,
   approveRentalRequest,
   getAllRentals,
+  endRental,
+  cancelRentalRequest,
 };
