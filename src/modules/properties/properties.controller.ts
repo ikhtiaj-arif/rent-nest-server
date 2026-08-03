@@ -71,7 +71,8 @@ const createProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req?.user?.id!;
     const files = (req.files as Express.Multer.File[]) ?? [];
-    const result = await propertiesService.createProperty(
+    
+    const result = await propertiesService?.createProperty(
       req.body,
       files,
       userId,
@@ -118,5 +119,6 @@ export const propertiesController = {
   getPropertiesFilterOptions,
   createProperty,
   updateProperty,
-  deleteProperty,getOwnProperties
+  deleteProperty,
+  getOwnProperties,
 };

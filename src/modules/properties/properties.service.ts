@@ -24,7 +24,7 @@ const createProperty = async (
     availableFrom,
     furnished,
   } = payload;
-  // const isFurnished = furnished === "true";
+  const isFurnished = furnished === "true";
 
   const landlordId = userId;
 
@@ -34,6 +34,8 @@ const createProperty = async (
           folder: "properties",
         })
       : [];
+
+  // console.log("upload image", uploadedImages);
 
   const result = await prisma.$transaction(async (tx) => {
     //? transaction-1: upsert category
@@ -57,7 +59,7 @@ const createProperty = async (
         address,
         description,
         availableFrom,
-        furnished,
+        furnished: isFurnished,
         landlordId,
         categoryId: category.id,
       },
@@ -99,13 +101,14 @@ const createProperty = async (
 // Maps the combined `sort` query param the client sends (e.g. "price_asc")
 // to a concrete { sortBy, sortOrder } pair. Falls back to explicit
 // sortBy/sortOrder query params, then to createdAt desc.
-const SORT_MAP: Record<string, { sortBy: string; sortOrder: "asc" | "desc" }> = {
-  newest: { sortBy: "createdAt", sortOrder: "desc" },
-  oldest: { sortBy: "createdAt", sortOrder: "asc" },
-  price_asc: { sortBy: "price", sortOrder: "asc" },
-  price_desc: { sortBy: "price", sortOrder: "desc" },
-  rating_desc: { sortBy: "createdAt", sortOrder: "desc" },
-};
+const SORT_MAP: Record<string, { sortBy: string; sortOrder: "asc" | "desc" }> =
+  {
+    newest: { sortBy: "createdAt", sortOrder: "desc" },
+    oldest: { sortBy: "createdAt", sortOrder: "asc" },
+    price_asc: { sortBy: "price", sortOrder: "asc" },
+    price_desc: { sortBy: "price", sortOrder: "desc" },
+    rating_desc: { sortBy: "createdAt", sortOrder: "desc" },
+  };
 
 const resolveSort = (query: IPropertyQuery) => {
   const mapped = query.sort ? SORT_MAP[query.sort] : undefined;
@@ -360,7 +363,7 @@ const updateProperty = async (
 
       categoryId = category.id;
     }
-
+    const isFurnished = payload.furnished === "true";
     const updatedProperty = await tx.property.update({
       where: {
         id: propertyId,
@@ -375,7 +378,7 @@ const updateProperty = async (
         bathrooms: payload.bathrooms,
         area: payload.area,
         availableFrom: payload.availableFrom,
-        furnished: payload.furnished,
+        furnished: isFurnished,
         isAvailable: payload.isAvailable,
         categoryId,
       },
