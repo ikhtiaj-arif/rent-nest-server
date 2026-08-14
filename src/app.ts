@@ -52,6 +52,11 @@ app.get("/", (_req: Request, res: Response) => {
   });
 });
 
+// Health check: keep-alive ping target, also useful for uptime monitoring
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 //app routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
