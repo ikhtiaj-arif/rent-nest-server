@@ -1,12 +1,13 @@
 model Payment {
-  id       String        @id @default(uuid())
+  id       String          @id @default(uuid())
   amount   Float
-  currency String        @default("usd")
-  status   PaymentStatus @default(PENDING)
+  currency String          @default("usd")
+  status   PaymentStatus   @default(PENDING)
   provider PaymentProvider @default(STRIPE)
 
   // The Stripe PaymentIntent ID unique per payment attempt
-  stripePaymentIntentId String @unique
+  stripePaymentIntentId   String? @unique
+  stripeCheckoutSessionId String?  @unique
 
   // Who paid
   tenantId String

@@ -238,11 +238,48 @@ const approveRentalRequest = async (
   landlordId: string,
   status: RentalStatus,
 ) => {
-  // validate status
-  // find rental
-  // verify landlord owns the property
-  // verify current status is PENDING
 
+  // 1. Validate status
+  // Ensures the landlord is actually approving or rejecting, not resetting it to PENDING
+
+  // console.log("payload",{
+  //   status,
+  //   landlordId,
+  //   rentalRequestId
+  // });
+  if (status === RentalStatus.PENDING) {
+    throw new Error(
+      "Invalid status update. Cannot update status back to PENDING.",
+    );
+  }
+
+  // 2. Find rental request along with its associated property
+  const rentalRequest = await prisma.rentalRequest.findUnique({
+    where: { id: rentalRequestId },
+    include: {
+      property: true,
+    },
+  });
+
+  if (!rentalRequest) {
+    throw new Error("Rental request not found.");
+  }
+
+  // 3. Verify landlord owns the property
+  if (rentalRequest.property.landlordId !== landlordId) {
+    throw new Error(
+      "Unauthorized. You do not own the property for this rental request.",
+    );
+  }
+
+  // 4. Verify current status is PENDING
+  if (rentalRequest.status !== RentalStatus.PENDING) {
+    throw new Error(
+      `Cannot update request. Current status is already ${rentalRequest.status}.`,
+    );
+  }
+
+  // 5. Execute the update and return the requested relations
   const result = await prisma.rentalRequest.update({
     where: {
       id: rentalRequestId,

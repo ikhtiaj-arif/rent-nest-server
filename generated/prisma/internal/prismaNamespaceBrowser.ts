@@ -109,6 +109,7 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   provider: 'provider',
   stripePaymentIntentId: 'stripePaymentIntentId',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
   tenantId: 'tenantId',
   rentalRequestId: 'rentalRequestId',
   createdAt: 'createdAt',

@@ -14,8 +14,8 @@ router.post(
   upload.array("images", 5),
   propertiesController.createProperty,
 );
-router.put("/properties/:id", propertiesController.updateProperty);
-router.delete("/properties/:id", propertiesController.deleteProperty);
+router.put("/properties/:id",  auth(Role.LANDLORD, Role.ADMIN), propertiesController.updateProperty);
+router.delete("/properties/:id",  auth(Role.LANDLORD, Role.ADMIN), propertiesController.deleteProperty);
 router.get(
   "/properties",
   auth(Role.LANDLORD, Role.ADMIN),
