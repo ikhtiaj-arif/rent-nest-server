@@ -75,7 +75,10 @@ const createPayment = async (
       amount: rentalRequest.property.price,
       currency: "bdt",
       status: PaymentStatus.PENDING,
-      stripePaymentIntentId: session.id, // storing session.id
+      stripeCheckoutSessionId: session.id, // storing session.id
+      stripePaymentIntentId: typeof session.payment_intent === "string"
+        ? session.payment_intent
+        : null,
       tenantId,
       rentalRequestId,
     },
@@ -148,7 +151,7 @@ const handlePaymentSuccess = async (
 ) => {
   // look up by session.id (stored in stripePaymentIntentId field)
   const payment = await prisma.payment.findUnique({
-    where: { stripePaymentIntentId: sessionId },
+    where: { stripeCheckoutSessionId: sessionId },
   });
 
   if (!payment) {
@@ -168,6 +171,7 @@ const handlePaymentSuccess = async (
 
   // get propertyId from metadata (passed when creating session)
   const propertyId = metadata?.propertyId;
+   
 
   // Atomic transaction — all three updates succeed or all fail together
   await prisma.$transaction([
@@ -175,14 +179,14 @@ const handlePaymentSuccess = async (
     
     // 1. Mark payment as completed
     prisma.payment.update({
-      where: { stripePaymentIntentId: sessionId },
+      where: { stripeCheckoutSessionId: sessionId },
       data: { status: PaymentStatus.COMPLETED },
     }),
 
     // 2. Move rental APPROVED → ACTIVE
     prisma.rentalRequest.update({
       where: { id: payment.rentalRequestId },
-      data: { status: RentalStatus.ACTIVE },
+      data: { status: RentalStatus.ACTIVE, },
     }),
 
     // 3. Mark property as unavailable — it's now rented
