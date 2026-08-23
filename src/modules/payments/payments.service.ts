@@ -154,8 +154,11 @@ const handlePaymentSuccess = async (
   if (!payment) {
     // Stripe may fire before our DB write in rare race conditions — safe to return
     // Stripe will retry delivery automatically
-    console.warn(`Webhook received for unknown session: ${sessionId}`);
-    return;
+    // console.warn(`Webhook received for unknown session: ${sessionId}`);
+      const error = new Error(`Payment record not found for Stripe session: ${sessionId}`);
+    (error as any).statusCode = 404; // Attach status code for your Express error handler
+    throw error;
+    // return;
   }
 
   // Idempotency guard — Stripe retries webhooks, don't process twice
@@ -168,6 +171,8 @@ const handlePaymentSuccess = async (
 
   // Atomic transaction — all three updates succeed or all fail together
   await prisma.$transaction([
+
+    
     // 1. Mark payment as completed
     prisma.payment.update({
       where: { stripePaymentIntentId: sessionId },
